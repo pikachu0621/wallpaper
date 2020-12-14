@@ -1,4 +1,4 @@
-package com.pikachu.book.tools.adapter;
+package com.pikachu.wallpaper.util.adapter;
 
 import android.view.ViewGroup;
 
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PagerAdapter extends FragmentPagerAdapter {

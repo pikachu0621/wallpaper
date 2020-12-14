@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pikachu.tools.qmui.util;
+package com.pikachu.wallpaper.util.state;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -27,9 +27,10 @@ import android.os.Environment;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.pikachu.tools.PILog;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -66,9 +67,9 @@ public class QMUIDeviceHelper {
                 fileInputStream = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
                 properties.load(fileInputStream);
             } catch (Exception e) {
-                PILog.printErrStackTrace(TAG, e, "read file error");
+               //PILog.printErrStackTrace(TAG, e, "read file error");
             } finally {
-                QMUILangHelper.close(fileInputStream);
+                close(fileInputStream);
             }
         }
 
@@ -81,9 +82,21 @@ public class QMUIDeviceHelper {
             //flyme
             sFlymeVersionName = getLowerCaseName(properties, getMethod, KEY_FLYME_VERSION_NAME);
         } catch (Exception e) {
-            PILog.printErrStackTrace(TAG, e, "read SystemProperties error");
+            //PILog.printErrStackTrace(TAG, e, "read SystemProperties error");
         }
     }
+
+    public static void close(Closeable c) {
+        if (c != null) {
+            try {
+                c.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     private static boolean _isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >=

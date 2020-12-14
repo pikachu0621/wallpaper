@@ -11,8 +11,9 @@
  */
 
 
-package com.pikachu.book.tools.state;
+package com.pikachu.wallpaper.util.state;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -97,7 +98,7 @@ public class PKStatusBarTools {
 
 
 
-    //设置状态栏字体颜色为黑色  android v >= 23 (6.0)
+    //设置状态栏字体颜色为黑色  android v < 23 (6.0)
     public PKStatusBarTools setSTSTestBlack() {
         setSTSTestBlackPr(COLOR);
         return this;
@@ -248,27 +249,26 @@ public class PKStatusBarTools {
 
 
 
-   /* *//**
+     /**
      * 设置状态栏黑色字体图标
      *
      * @param activity
      * @return
-     *//*
+     */
     public static boolean setSTSBlack(Activity activity){
         return QMUIStatusBarHelper.setStatusBarLightMode(activity);
     }
 
-    *//**
+    /**
      * 设置状态栏白色字体图标
      *
      * @param activity
      * @return
-     *//*
+     */
     public static boolean setSTSWhite(Activity activity){
         return QMUIStatusBarHelper.setStatusBarDarkMode(activity);
     }
 
-*/
 
 
 
@@ -329,14 +329,12 @@ public class PKStatusBarTools {
      */
     public static String getNavBarOverride() {
         String sNavBarOverride = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            try {
-                Class c = Class.forName("android.os.SystemProperties");
-                Method m = c.getDeclaredMethod("get", String.class);
-                m.setAccessible(true);
-                sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");
-            } catch (Exception e) {
-            }
+        try {
+            @SuppressLint("PrivateApi") Class c = Class.forName("android.os.SystemProperties");
+            Method m = c.getDeclaredMethod("get", String.class);
+            m.setAccessible(true);
+            sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");
+        } catch (Exception e) {
         }
         return sNavBarOverride;
     }

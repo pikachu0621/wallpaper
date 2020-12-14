@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pikachu.book.tools.view;
+package com.pikachu.wallpaper.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -36,16 +36,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.pikachu.book.R;
+import com.pikachu.wallpaper.R;
 
 
 /**
  * 提供为图片添加圆角、边框、剪裁到圆形或其他形状等功能。
- * shown radius image in view, is different to {@link QMUIRadiusImageView}
+ * shown radius image in view, is different to {@link com.pikachu.wallpaper.widget.QMUIRadiusImageView}
  *
  * @author cginechen
  * @date 2015-07-09

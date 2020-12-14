@@ -1,66 +1,171 @@
 package com.pikachu.wallpaper.index.one;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pikachu.wallpaper.R;
+import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
+import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
+import com.pikachu.wallpaper.util.app.AppInfo;
+import com.pikachu.wallpaper.util.base.BaseFragment;
+import com.pikachu.wallpaper.util.url.LoadUrl;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecyclerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class RecyclerFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import static com.pikachu.wallpaper.util.app.Tools.getItem;
+import static com.pikachu.wallpaper.util.app.Tools.showToast;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public RecyclerFragment() {
+public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.OnItemClickListener {
+
+    private final JsonHomeTabsList jsonHomeTabsList;
+    private final int minPager = 0;
+    private View inflate;
+    private SmartRefreshLayout mF1RRefreshLayout;
+    private RecyclerView mF1RRecycler;
+    private FragmentActivity activity;
+    private int page;
+    private F1RecyclerAdapter recyclerAdapter;
+
+    public RecyclerFragment(JsonHomeTabsList jsonHomeTabsList) {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecyclerFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecyclerFragment newInstance(String param1, String param2) {
-        RecyclerFragment fragment = new RecyclerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        this.jsonHomeTabsList = jsonHomeTabsList;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        inflate = inflater.inflate(R.layout.fragment_recycler, container, false);
+        activity = getActivity();
+        initView();
+        init();
+        return inflate;
     }
 
+    private void init() {
+
+        mF1RRefreshLayout.setRefreshHeader(new ClassicsHeader(activity));
+        mF1RRefreshLayout.setRefreshFooter(new ClassicsFooter(activity));
+        mF1RRefreshLayout.setEnableAutoLoadMore(true);//是否启用列表惯性滑动到底部时自动加载更多
+        mF1RRefreshLayout.setOnRefreshListener(refreshlayout -> load(true));
+        mF1RRefreshLayout.setOnLoadMoreListener(refreshlayout -> load(false));
+
+    }
+
+    private void load(boolean isUpData) {
+
+        if (isUpData) page = minPager;
+        else page++;
+
+        //加载书
+        new LoadUrl(activity, AppInfo.getUrl(jsonHomeTabsList, page), new LoadUrl.OnCall() {
+
+
+            @Override
+            public void error(Exception e) {
+                //Tools.showToast(activity, "加载书出错");
+
+                if (isUpData)
+                    mF1RRefreshLayout.finishRefresh(false);//结束刷新（刷新失败）
+                else {
+                    mF1RRefreshLayout.finishLoadMore(false);//结束加载（加载失败）
+                    page--;
+                }
+
+            }
+
+            @Override
+            public void finish(String str) {
+                //加载成功后 截取需要的字符串
+
+                List<JsonHomeF1ImageList> jsonHomeF1ImageLists = new Gson().fromJson(str, new TypeToken<List<JsonHomeF1ImageList>>() {
+                }.getType());
+
+
+                if (jsonHomeF1ImageLists !=null && jsonHomeF1ImageLists.size() > 0) {
+
+                    //添加日期
+                    if (jsonHomeTabsList.getTagE().equals("today")){
+                        JsonHomeF1ImageList jsonHomeF1ImageList = new JsonHomeF1ImageList();
+                        jsonHomeF1ImageList.setTimeItem(true);
+                        jsonHomeF1ImageList.setItemTime(getItem(page));
+                        jsonHomeF1ImageLists.add(0,jsonHomeF1ImageList);
+                    }
+
+
+                    if (recyclerAdapter == null || isUpData) {
+                        recyclerAdapter = new F1RecyclerAdapter(activity, jsonHomeF1ImageLists , RecyclerFragment.this);
+
+                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//防止Item切换
+                        mF1RRecycler.setLayoutManager(layoutManager);
+                        mF1RRecycler.setAdapter(recyclerAdapter);
+                    } else
+                        recyclerAdapter.addList(jsonHomeF1ImageLists);
+
+
+                    if (isUpData) mF1RRefreshLayout.finishRefresh(true);//结束刷新（刷新成功）
+                    else mF1RRefreshLayout.finishLoadMore(true);//结束加载（加载成功）
+
+                } else {
+                    if (isUpData) mF1RRefreshLayout.finishRefresh(true);//结束刷新（刷新成功）
+                    else {
+                        page--;
+                        mF1RRefreshLayout.finishLoadMoreWithNoMoreData();//完成加载并标记没有更多数据 1.0.4
+                    }
+                }
+
+            }
+        });
+
+    }
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recycler, container, false);
+    protected void initData() {
+        mF1RRefreshLayout.autoRefresh();//自动刷新
+        load(true);
+    }
+
+
+    private void initView() {
+        mF1RRefreshLayout = inflate.findViewById(R.id.m_f1_r_refreshLayout);
+        mF1RRecycler = inflate.findViewById(R.id.m_f1_r_recycler);
+    }
+
+
+
+
+
+
+    //item 点击
+    @Override
+    public void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+        showToast(activity,"点击列表"+position);
+    }
+
+    //下载点击
+    @Override
+    public void onItemDownLoadClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+        showToast(activity,"点击列表"+position+"的下载");
+    }
+
+    //收藏点击
+    @Override
+    public void onItemLikeClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+        showToast(activity,"点击列表"+position+"的收藏");
     }
 }

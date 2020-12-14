@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">wallpaper</string>
+    <string name="app_author">pikachu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_home_f1">首页</string>
+    <string name="app_home_f2">分类</string>
+    <string name="app_home_f3">我的</string>
 </resources>

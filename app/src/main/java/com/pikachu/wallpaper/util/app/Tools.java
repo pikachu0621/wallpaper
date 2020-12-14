@@ -2,10 +2,10 @@
  * 常用静态工具
  */
 
-package com.pikachu.book.tools.untli;
+package com.pikachu.wallpaper.util.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -18,17 +18,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.pikachu.book.cls.json.JsonBookItemCls;
-import com.pikachu.book.cls.sql.F2BooksData;
-
-import org.greenrobot.greendao.annotation.NotNull;
+import com.google.android.material.tabs.TabLayout;
+import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
+import com.pikachu.wallpaper.util.url.LoadUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Tools {
     private static Toast toastT;
@@ -103,7 +104,7 @@ public class Tools {
         else {
             index = content.indexOf(indexStr);
             if (index == -1)
-                index = 0;
+                return null;
             else
                 index += indexStr.length();
         }
@@ -116,7 +117,7 @@ public class Tools {
         else {
             end = oneStr.indexOf(endStr);
             if (end == -1)
-                end = oneStr.length();
+                return null;
         }
 
         //第二次截取
@@ -142,6 +143,7 @@ public class Tools {
      */
     public static boolean isNight() {
         Date date = new Date();
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df = new SimpleDateFormat("HH");
         String str = df.format(date);
         int a = Integer.parseInt(str);
@@ -153,6 +155,21 @@ public class Tools {
 
     }
 
+
+    /**
+     * 获取过去day天的日期
+     * @param day
+     * @return
+     */
+    public static String getItem(int day){
+
+        Calendar cal= Calendar.getInstance();
+        cal.add(Calendar.DATE,day*-1);
+        Date d=cal.getTime();
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sp=new SimpleDateFormat("yy-MM-dd");
+        return sp.format(d);
+    }
 
 
 
@@ -222,6 +239,50 @@ public class Tools {
         intent.setData(Uri.parse(url));
         activity.startActivity(intent);
     }
+
+
+
+
+
+
+    /**
+     * 截取网页 to TabsObject
+     *
+     * @param str
+     * @return
+     */
+    public static List<JsonHomeTabsList> strToTabsObject(String str){
+
+        ArrayList<JsonHomeTabsList> jsonHomeTabsLists = new ArrayList<>();
+
+        if (str != null && !str.equals("")){
+            String str1 = cutStr(str, "js-tag-container\">", "<div class=\"container-item");
+            if (str1 != null && !str1.equals("") ){
+                String replace = str1.replace(" ", "").replace("\n", "");
+                String[] dataS = replace.split("<divclass=\"tag-item\"");
+                for (String ob:dataS){
+                    if (ob != null && !ob.equals("")){
+                        boolean isTagTab = true;
+                        String tabStr = cutStr(ob, "tag-item-text\"><b>", "<");
+                        String imageURl = cutStr(ob, "url('", "');");
+                        String tabE = cutStr(ob, "href=\"/tag/", "\"");
+                        if (tabE == null || tabE.equals("")){
+                            tabE = cutStr(ob, "href=\"/", "\"");
+                            tabE = tabE.replace("trending","likes");
+                            tabE = tabE.replace("discover","");
+                            isTagTab = false;
+                        }
+                        jsonHomeTabsLists.add(new JsonHomeTabsList(imageURl,tabStr,tabE,isTagTab));
+                    }
+                }
+            }
+        }
+        return jsonHomeTabsLists;
+
+    }
+
+
+
 
 
 

@@ -2,7 +2,7 @@
  * 用于懒加载 数据
  */
 
-package com.pikachu.book.tools.base;
+package com.pikachu.wallpaper.util.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
             lazyLoad();
         } else {
             isVisible = false;
-            /*onInvisible();*/
+            onInvisible();
         }
     }
 
@@ -75,6 +75,10 @@ public abstract class BaseFragment extends Fragment {
      * 懒加载
      */
     private void lazyLoad() {
+
+        if (isPrepared && isVisible && !isFirst)
+            onDisplay();
+
         if (!isPrepared || !isVisible || !isFirst) {
             return;
         }
@@ -96,7 +100,14 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 不可见时调用
      */
-    /*protected abstract void onInvisible();*/
+    protected void onInvisible(){}
+
+
+    /**
+     * 可见时调用
+     * 第一次不会加载
+     */
+    protected void onDisplay(){}
 
 
 

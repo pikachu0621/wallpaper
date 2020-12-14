@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pikachu.tools.qmui.util;
+package com.pikachu.wallpaper.util.state;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -27,6 +27,8 @@ import androidx.core.view.ViewCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.pikachu.wallpaper.util.app.Tools;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -76,6 +78,10 @@ public class QMUIStatusBarHelper {
         translucent(window, colorOn5x);
     }
 
+    public static boolean isNotchOfficialSupport(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+    }
+
     @TargetApi(19)
     public static void translucent(Window window, @ColorInt int colorOn5x) {
         if (!supportTranslucent()) {
@@ -83,7 +89,7 @@ public class QMUIStatusBarHelper {
             return;
         }
 
-        if (QMUINotchHelper.isNotchOfficialSupport()) {
+        if (isNotchOfficialSupport()) {
             handleDisplayCutoutMode(window);
         }
 
@@ -458,13 +464,13 @@ public class QMUIStatusBarHelper {
             }
         }
         if (QMUIDeviceHelper.isTablet(context)
-                && sStatusBarHeight > QMUIDisplayHelper.dp2px(context, STATUS_BAR_DEFAULT_HEIGHT_DP)) {
+                && sStatusBarHeight > Tools.dp2px(context, STATUS_BAR_DEFAULT_HEIGHT_DP)) {
             //状态栏高度大于25dp的平板，状态栏通常在下方
             sStatusBarHeight = 0;
         } else {
             if (sStatusBarHeight <= 0) {
                 if (sVirtualDensity == -1) {
-                    sStatusBarHeight = QMUIDisplayHelper.dp2px(context, STATUS_BAR_DEFAULT_HEIGHT_DP);
+                    sStatusBarHeight = Tools.dp2px(context, STATUS_BAR_DEFAULT_HEIGHT_DP);
                 } else {
                     sStatusBarHeight = (int) (STATUS_BAR_DEFAULT_HEIGHT_DP * sVirtualDensity + 0.5f);
                 }

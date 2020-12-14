@@ -33,7 +33,33 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    //图片缓存工具
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //下拉刷新
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'  //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1' //经典刷新头
+
+    //数据库
+    implementation 'org.greenrobot:greendao:3.3.0'
+
+    //eventbus 用于刷新ui
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+    //ViewPager
+    implementation 'com.to.aboomy:pager2banner:1.0.1'
+
+    //快速RecyclerView.adapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
 }

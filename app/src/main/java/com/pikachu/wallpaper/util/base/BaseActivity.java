@@ -1,19 +1,6 @@
-package com.pikachu.book.tools.base;
-/**
- * K V 储存
- * <p>
- * 强制横屏    记
- * 排序   记
- */
-
-
-import android.app.AlertDialog;
+package com.pikachu.wallpaper.util.base;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -21,19 +8,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.pikachu.book.R;
+import com.pikachu.wallpaper.R;
+import com.pikachu.wallpaper.util.app.Tools;
+import com.pikachu.wallpaper.util.state.PKStatusBarActivity;
+import com.pikachu.wallpaper.util.state.PKStatusBarTools;
 
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends PKStatusBarActivity {
 
 
     private Toast toast;
@@ -43,15 +32,25 @@ public class BaseActivity extends AppCompatActivity {
     private Point point;
 
 
-    /*@Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setPkStatusBarTools(pkStatusBarTools());
+
+    }
 
 
 
+    //设置沉浸式状态栏 //返回null为不设置
+    public abstract PKStatusBarTools pkStatusBarTools();
 
-    }*/
+
+    public void setContentView(@LayoutRes int layoutResID,@IdRes int statusResID) {
+        super.setContentView(layoutResID);
+        setPlaceholderView(statusResID);
+    }
+
 
     /**
      * toast
@@ -73,6 +72,7 @@ public class BaseActivity extends AppCompatActivity {
             onBackEvent.backEvent();
         return super.onOptionsItemSelected(item);
     }
+
 
 
     /**
@@ -125,80 +125,7 @@ public class BaseActivity extends AppCompatActivity {
         return intent.getFloatExtra(name, defaultValue);
     }
 
-    /**
-     * 弹出加载弹框
-     *
-     * @param isOnTouch 触摸空白或者返回键是否关闭 dialog
-     * @param msg       消息
-     * @return dialog
-     */
-    /*
-    public Dialog showLoadDialog(boolean isOnTouch, String msg) {
-        Dialog dialog = new Dialog(this);
-        View inflate = LayoutInflater.from(this).inflate(R.layout.ui_dialog, null);
-        TextView textView = inflate.findViewById(R.id.ui_dialog_text);
-        textView.setText(msg);
-        ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
-        Value screenSize = getScreenSize();//获取屏幕宽高
-        int w = (int) (screenSize.x * 0.6f);
-        if (layoutParams.width > w)
-            layoutParams.width = w;
-        dialog.setContentView(inflate);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setCanceledOnTouchOutside(isOnTouch);
-        dialog.setCancelable(isOnTouch);
-        dialog.show();
 
-        return dialog;
-    }*/
-
-
-    /**
-     * 没原来好用，不仅建议用
-     * <br/>两个 按钮的 弹窗
-     *
-     * @param title        标题
-     * @param msg          消息
-     * @param leftStr      左按键String
-     * @param leftOnClick  左按键监听
-     * @param rightStr     右按键String
-     * @param rightOnClick 右按键监听
-     * @return
-     */
-    @Deprecated
-    public AlertDialog.Builder showDialog(String title, String msg,
-                                          String leftStr, DialogInterface.OnClickListener leftOnClick,
-                                          String rightStr, DialogInterface.OnClickListener rightOnClick) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(msg);
-        if (leftStr != null)
-            builder.setNegativeButton(leftStr, leftOnClick);
-        if (rightStr != null)
-            builder.setPositiveButton(rightStr, rightOnClick);
-        builder.show();
-        return builder;
-    }
-
-
-    /**
-     * 没原来好用，不建议用
-     * <br/>
-     * 存数据
-     *
-     * @param key k
-     * @param var v
-     * @return
-     */
-    @Deprecated
-    public SharedPreferences addKV(String name, String key, String var) {
-        SharedPreferences sharedPreferences = getSharedPreferences(name, MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString(key, var);
-        edit.apply();
-        //edit.commit();
-        return sharedPreferences;
-    }
 
 
     public static class Value {
@@ -222,50 +149,26 @@ public class BaseActivity extends AppCompatActivity {
 
 
     /**
-     * 全屏  在setContentView() 前调用
+     * 设置一个占位view 用于占位状态栏
+     *
+     * @param view
      */
-    public void setFullScreen() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-
-    /**
-     * 更具男女进行主题设置
-     * @param isBoy
-     * @param viewGroup
-     */
-    public void setTheme(boolean isBoy, ViewGroup viewGroup) {
-        setTheme(isBoy, false, viewGroup);
+    public void setPlaceholderView(View view){
+        Tools.setNonHigh(this, view);
     }
 
     /**
-     * 更具男女进行主题设置
-     * @param isBoy
+     * 设置一个占位view 用于占位状态栏
+     * @param id
      */
-    public void setTheme(boolean isBoy) {
-        setTheme(isBoy, true, null);
+    public void setPlaceholderView(@IdRes int id){
+        Tools.setNonHigh(this, findViewById(id));
     }
 
 
-    private void setTheme(boolean isBoy, boolean isAppBar, ViewGroup viewGroup) {
 
 
-        //更具男女进行主题设置
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //状态栏
-            getWindow().setStatusBarColor(isBoy ? getResources().getColor(R.color.purple_700) : getResources().getColor(R.color.purge_800));
 
-            int color = isBoy ? getResources().getColor(R.color.purple_700) : getResources().getColor(R.color.purge_800);
-            if (isAppBar) {
-                //AppBar
-                getSupportActionBar().setBackgroundDrawable(new
-                        ColorDrawable(color));
-            } else {
-                viewGroup.setBackgroundColor(color);
-            }
-        }
-    }
 
 
 }
