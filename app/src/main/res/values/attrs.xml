@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+    <!--    QMUI 图片圆角  -->
+    <declare-styleable name="QMUIRadiusImageView">
+        <attr format="dimension" name="qmui_border_width"/>
+        <attr format="color" name="qmui_border_color"/>
+        <attr format="color" name="qmui_selected_mask_color"/>
+        <attr format="color" name="qmui_selected_border_color"/>
+        <attr format="dimension" name="qmui_selected_border_width"/>
+        <attr format="dimension" name="qmui_corner_radius"/>
+        <attr format="boolean" name="qmui_is_oval"/>
+        <attr format="boolean" name="qmui_is_circle"/>
+        <attr format="boolean" name="qmui_is_touch_select_mode_enabled"/>
+    </declare-styleable>
+
+
+
+</resources>
