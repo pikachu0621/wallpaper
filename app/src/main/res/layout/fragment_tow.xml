@@ -1,14 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".index.tow.TowFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".index.tow.TowFragment"
+    android:background="@color/white_1">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/m_f2_appbar">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin"
+            app:navigationIcon="@null">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/m_f2_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <com.pikachu.wallpaper.widget.QMUIRadiusImageView
+                        android:id="@+id/m_f2_qmui"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_author"
+                        app:qmui_border_color="@color/white"
+                        app:qmui_border_width="2dp"
+                        app:qmui_is_circle="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/m_f2_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/ic_search_bg">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ic_search" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="40dp"
+                            android:src="@drawable/ic_search"
+                            android:text="@string/app_author"
+                            android:textColor="@color/black_2"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/m_f2_appbar">
+        <include layout="@layout/fragment_recycler" />
+    </RelativeLayout>
 
-</FrameLayout>
+
+
+
+
+</RelativeLayout>

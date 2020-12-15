@@ -10,15 +10,19 @@ public class AppInfo {
 
 
 
-    ////////配置//////
-    public static final long DEFAULT_AUTO_TIME = 5500; //轮播时间
-    public static final float APP_HOME_ITEM_PRO = 0.06F; //图片缩小比例
-    public static final int APP_HOME_TAB_NUMBER = 8; //首页Tab个数  -1不限制
+    ////////      APP 配置     //////
+    public static final long APP_HOME_F1_AUTO_TIME = 6; //轮播时间                        可选值   (0,Max]  单位 秒
+    public static final float APP_HOME_F1_ITEM_PRO = 0.08F; //图片缩小比例                 可选值   (0,1]
+    public static final int APP_HOME_F1_TAB_NUMBER = 8; //首页Tab个数                     可选值   [0,Max]   -1不限制
+    public static final int APP_HOME_F1_IMAGE_PX = 0; //列表图片清晰度                     可选值   0低  1高  2超高  3原图
+    public static final int APP_HOME_F1_ITEM_STYLE = 1; //列表样式                        可选值   0(带下巴), 1(不带)
+    public static final int APP_HOME_F2_ITEM_NUMBER = 3; //分类一行几个item                可选值   1，2，3，4.....
+
+
+
 
 
     ////////////    API     ///////
-
-
     //用于加载小说列表
     public static final String APP_API_IMAGE_LIST = "https://api.ihansen.org/img/detail?page={page}&index=&orderBy={tabs}&tag={tag}&favorites=";
     public static final String APP_API_TABS_LIST ="https://photo.ihansen.org";
@@ -39,10 +43,6 @@ public class AppInfo {
         return getUrl(jsonHomeTabsList,page);
     }
 
-
-    //https://api.ihansen.org/img/detail?page=0&index=&orderBy=&tag=landscape&favorites=
-    //https://api.ihansen.org/img/detail?page=0&index=&orderBy=&tag=city&favorites=
-    //https://api.ihansen.org/img/detail?page=1&index=&orderBy=&tag=%E6%B9%96%E6%B0%B4&favorites=
 
 
 

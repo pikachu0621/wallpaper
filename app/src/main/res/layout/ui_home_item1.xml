@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_margin="4dp"
-    android:elevation="1dp"
+    android:elevation="0dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp"
     app:cardCornerRadius="6dp">
 
 
@@ -19,9 +21,9 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_home" />
         <TextView
+            android:id="@+id/h_item1_text2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/purple_1"/>
+            android:layout_height="match_parent" />
         <TextView
             android:id="@+id/h_item1_text1"
             android:layout_width="wrap_content"

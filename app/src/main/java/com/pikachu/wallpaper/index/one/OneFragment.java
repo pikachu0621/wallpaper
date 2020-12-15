@@ -47,9 +47,8 @@ public class OneFragment extends BaseFragment {
     private ViewPager mF1Pager1;
     private Banner banner;
     private FragmentActivity activity;
-    private Thread thread;
     private AppBarLayout mF1AppBar;
-    private Banner mF1Pager2;
+    private boolean isAppBarOpen;
 
 
     public OneFragment() {
@@ -80,8 +79,8 @@ public class OneFragment extends BaseFragment {
             public void finish(String str) {
                 List<JsonHomeTabsList> jsonHomeTabsLists = strToTabsObject(str);
                 //控制Tab个数
-                if (jsonHomeTabsLists.size() > AppInfo.APP_HOME_TAB_NUMBER && AppInfo.APP_HOME_TAB_NUMBER != -1)
-                    jsonHomeTabsLists = jsonHomeTabsLists.subList(0, AppInfo.APP_HOME_TAB_NUMBER);
+                if (jsonHomeTabsLists.size() > AppInfo.APP_HOME_F1_TAB_NUMBER && AppInfo.APP_HOME_F1_TAB_NUMBER != -1)
+                    jsonHomeTabsLists = jsonHomeTabsLists.subList(0, AppInfo.APP_HOME_F1_TAB_NUMBER);
 
                 ArrayList<String> strings = new ArrayList<>();
                 ArrayList<Fragment> fragments = new ArrayList<>();
@@ -120,7 +119,7 @@ public class OneFragment extends BaseFragment {
                     strings.add(jsonHomeF1ImageList.getSmallUrl());
                 //创建adapter
                 banner.setAdapter(new ImageAdapter(activity, strings));
-                banner.setAutoTurningTime(AppInfo.DEFAULT_AUTO_TIME);
+                banner.setAutoTurningTime(AppInfo.APP_HOME_F1_AUTO_TIME *1000);
                 banner.startTurning();//开启自动无限轮播
             }
         });
@@ -133,10 +132,12 @@ public class OneFragment extends BaseFragment {
                     //展开状态
                     banner.startTurning();//开启
                     QMUIStatusBarHelper.setStatusBarDarkMode(activity);
+                    isAppBarOpen = true;
                 }else if(state == State.COLLAPSED){
                     //折叠状态
                     banner.stopTurning();
                     QMUIStatusBarHelper.setStatusBarLightMode(activity);
+                    isAppBarOpen = false;
                 }
             }
         });
@@ -162,6 +163,13 @@ public class OneFragment extends BaseFragment {
     protected void onDisplay() {
         if (banner != null)
             banner.startTurning();//开启自动无限轮播
+
+        //判断是否展开 从而设置状态栏
+        if (isAppBarOpen)
+            QMUIStatusBarHelper.setStatusBarDarkMode(activity);
+        else
+            QMUIStatusBarHelper.setStatusBarLightMode(activity);
+
     }
 
 

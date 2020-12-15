@@ -1,4 +1,4 @@
-package com.pikachu.wallpaper.index.one;
+package com.pikachu.wallpaper.index.three;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,10 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.util.app.AppInfo;
@@ -27,12 +23,11 @@ import com.pikachu.wallpaper.widget.QMUIRadiusImageView;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class F3RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int LAYOUT_TIME = 1,LAYOUT_IMAGE = 2;
     private final OnItemClickListener onItemClickListener;
@@ -48,7 +43,7 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
 
-    public F1RecyclerAdapter(Context context,List<JsonHomeF1ImageList> jsonHomeF1ImageLists, OnItemClickListener onItemClickListener) {
+    public F3RecyclerAdapter(Context context, List<JsonHomeF1ImageList> jsonHomeF1ImageLists, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.jsonHomeF1ImageLists = jsonHomeF1ImageLists;
         this.onItemClickListener = onItemClickListener;
