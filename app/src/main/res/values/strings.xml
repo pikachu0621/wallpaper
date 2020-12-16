@@ -6,4 +6,9 @@
     <string name="app_home_f1">首页</string>
     <string name="app_home_f2">分类</string>
     <string name="app_home_f3">我的</string>
+    <string name="app_f3_title">发现精彩</string>
+    <string name="app_f3_keep">我的收藏</string>
+    <string name="app_f3_download">我的下载</string>
+    <string name="app_f3_history">历史浏览</string>
+    <string name="app_f3_settings">关于设置</string>
 </resources>

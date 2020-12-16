@@ -5,7 +5,7 @@
     <color name="purple_1">#807A7AF9</color>
 
     <color name="white">#FFFFFFFF</color>
-    <color name="white_1">#FFEEEEEE</color>
+    <color name="white_1">#FFEAEAEA</color>
 
     <color name="white_A0F">#A0FFFFFF</color>
     <color name="white_A0D">#A0DADADA</color>
@@ -19,6 +19,10 @@
     <color name="black_400">#40000000</color>
 
 
+    <color name="keep">#BE19FA</color>
+    <color name="download">#1E96FF</color><!--#FFB41E-->
+    <color name="settings">#7C1EFF</color>
+    <color name="history">#FFB41E</color>
 
 
 

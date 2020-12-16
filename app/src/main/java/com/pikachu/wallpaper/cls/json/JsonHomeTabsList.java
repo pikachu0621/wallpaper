@@ -22,7 +22,7 @@ public class JsonHomeTabsList {
         this.isTagTab = isTagTab;
     }
 
-    public JsonHomeTabsList(){};
+    public JsonHomeTabsList(){}
 
     public String getImageURl() {
         return imageURl;

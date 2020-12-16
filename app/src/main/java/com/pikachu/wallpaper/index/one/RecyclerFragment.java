@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +35,7 @@ import static com.pikachu.wallpaper.util.app.Tools.showToast;
 public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.OnItemClickListener {
 
     private final JsonHomeTabsList jsonHomeTabsList;
-    private final int minPager = 0;
+    private int minPager = 0;
     private View inflate;
     private SmartRefreshLayout mF1RRefreshLayout;
     private RecyclerView mF1RRecycler;
@@ -56,12 +58,14 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
     }
 
     private void init() {
+        if (jsonHomeTabsList.getTagE().equals("today")) minPager = 1;
 
         mF1RRefreshLayout.setRefreshHeader(new ClassicsHeader(activity));
         mF1RRefreshLayout.setRefreshFooter(new ClassicsFooter(activity));
         mF1RRefreshLayout.setEnableAutoLoadMore(true);//是否启用列表惯性滑动到底部时自动加载更多
         mF1RRefreshLayout.setOnRefreshListener(refreshlayout -> load(true));
         mF1RRefreshLayout.setOnLoadMoreListener(refreshlayout -> load(false));
+
 
     }
 
@@ -70,13 +74,13 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
         if (isUpData) page = minPager;
         else page++;
 
-        //加载书
-        new LoadUrl(activity, AppInfo.getUrl(jsonHomeTabsList, page), new LoadUrl.OnCall() {
+        String url = AppInfo.getUrl(jsonHomeTabsList, page);
+
+        new LoadUrl(activity,url, new LoadUrl.OnCall() {
 
 
             @Override
             public void error(Exception e) {
-                //Tools.showToast(activity, "加载书出错");
 
                 if (isUpData)
                     mF1RRefreshLayout.finishRefresh(false);//结束刷新（刷新失败）

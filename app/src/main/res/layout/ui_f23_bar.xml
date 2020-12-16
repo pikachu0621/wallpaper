@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <View
+            android:id="@+id/m_f2_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/m_f2_RealtimeBlurView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:realtimeBlurRadius="14dp"
+            android:layout_alignTop="@id/m_f2_view"
+            android:layout_alignBottom="@id/m_f2_lin1"
+            android:background="@color/white"
+            android:alpha="0"/>
+
+        <LinearLayout
+            android:id="@+id/m_f2_lin1"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_below="@id/m_f2_view">
+
+            <TextView
+                android:id="@+id/m_f2_text1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_search"
+                android:text="@string/app_f3_title"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:theme="@style/index_text_bottom3" />
+
+
+            <ImageView
+                android:id="@+id/m_f2_image1"
+                android:layout_width="?actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:padding="19dp"
+                android:src="@drawable/ic_search_d" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+

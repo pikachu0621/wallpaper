@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pikachu.wallpaper.R;
+import com.pikachu.wallpaper.cls.json.JsonChinaGeography;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.util.adapter.PagerAdapter;
@@ -30,7 +31,9 @@ import com.pikachu.wallpaper.widget.QMUIRadiusImageView;
 import com.to.aboomy.pager2banner.Banner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import static com.pikachu.wallpaper.util.app.Tools.showToast;
 import static com.pikachu.wallpaper.util.app.Tools.strToTabsObject;
@@ -100,7 +103,7 @@ public class OneFragment extends BaseFragment {
 
 
         //加载轮播
-        new LoadUrl(activity, AppInfo.getUrl("today", 0, false), new LoadUrl.OnCall() {
+        new LoadUrl(activity, AppInfo.getUrl(AppInfo.APP_HOME_F1_AUTO_TAG, new Random(new Date().getTime()).nextInt(AppInfo.APP_HOME_F1_AUTO_PAGER), false), new LoadUrl.OnCall() {
 
             @Override
             public void error(Exception e) {
@@ -114,11 +117,15 @@ public class OneFragment extends BaseFragment {
                 List<JsonHomeF1ImageList> jsonHomeF1ImageLists = new Gson().fromJson(str, new TypeToken<List<JsonHomeF1ImageList>>() {
                 }.getType());
 
-                ArrayList<String> strings = new ArrayList<>();
-                for (JsonHomeF1ImageList jsonHomeF1ImageList : jsonHomeF1ImageLists)
-                    strings.add(jsonHomeF1ImageList.getSmallUrl());
+                ArrayList<JsonChinaGeography> strings = new ArrayList<>();
+                for (JsonHomeF1ImageList jsonHomeF1ImageList : jsonHomeF1ImageLists){
+                    JsonChinaGeography jsonChinaGeography = new JsonChinaGeography();
+                    String clarity = F1RecyclerAdapter.getClarity(jsonHomeF1ImageList.getSmallUrl());
+                    jsonChinaGeography.setUrl(clarity);
+                    strings.add(jsonChinaGeography);
+                }
                 //创建adapter
-                banner.setAdapter(new ImageAdapter(activity, strings));
+                banner.setAdapter(new ImageAdapter(activity,false, strings));
                 banner.setAutoTurningTime(AppInfo.APP_HOME_F1_AUTO_TIME *1000);
                 banner.startTurning();//开启自动无限轮播
             }

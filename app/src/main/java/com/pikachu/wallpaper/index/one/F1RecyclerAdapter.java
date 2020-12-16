@@ -2,8 +2,6 @@ package com.pikachu.wallpaper.index.one;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.util.app.AppInfo;
@@ -73,7 +68,12 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == LAYOUT_TIME)
             return  new ViewHolder1(LayoutInflater.from(parent.getContext()).inflate(R.layout.ui_home_item1, parent, false));
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(AppInfo.APP_HOME_F1_ITEM_STYLE ==0 ? R.layout.ui_home_item:R.layout.ui_home_item2,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
+                AppInfo.APP_HOME_F1_ITEM_STYLE ==0 ?
+                        R.layout.ui_home_item :
+                AppInfo.APP_HOME_F1_ITEM_STYLE == 1 ?
+                        R.layout.ui_home_item2 :
+                        R.layout.ui_home_item3 ,parent,false));
     }
 
     @SuppressLint("SetTextI18n")
@@ -87,29 +87,22 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }else {
             ViewHolder holderImage = (ViewHolder) holder;
 
-
             // 比例缩小 并设置imageView 高
-            proImageHW(jsonHomeF1ImageList.getHeight(), AppInfo.APP_HOME_F1_ITEM_PRO, holderImage.hItemImage1);
+            proImageHW(context,jsonHomeF1ImageList.getHeight(), AppInfo.APP_HOME_ITEM_PRO, holderImage.hItemImage1);
 
-            //设置清晰度
-            String imageURL = jsonHomeF1ImageList.getSmallUrl();
-            if (AppInfo.APP_HOME_F1_IMAGE_PX == 0)
-                imageURL =  imageURL.replace("!w400","!w600");
-           else  if (AppInfo.APP_HOME_F1_IMAGE_PX == 2)
-                imageURL =  imageURL.replace("!w400","!o");
-            else  if (AppInfo.APP_HOME_F1_IMAGE_PX == 3)
-                imageURL =  imageURL.replace("!w400","");
 
 
             Glide.with(context)
-                    .load(imageURL)
-                    .placeholder(new ColorDrawable(Color.parseColor(jsonHomeF1ImageList.getColor())))
+                    .load(getClarity(jsonHomeF1ImageList.getSmallUrl()))
+                    //.placeholder(new ColorDrawable(Color.parseColor(jsonHomeF1ImageList.getColor())))android.R.anim.fade_in
+                    .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
                     //.override((int)(jsonHomeF1ImageList.getWidth()*AppInfo.APP_HOME_ITEM_PRO), (int)(jsonHomeF1ImageList.getHeight()*AppInfo.APP_HOME_ITEM_PRO)) // resizes the image to these dimensions (in pixel). does not respect aspect r
-                    //.transition(DrawableTransitionOptions.withCrossFade(600))//适用于Drawable，过渡动画持续600ms
                     .into(holderImage.hItemImage1);
 
+
             String description = jsonHomeF1ImageList.getInfo().getDescription();
-            holderImage.hItemText1.setText(description==null || description.equals("") ? "Pikachu" :description);
+
+            holderImage.hItemText1.setText(description==null || description.equals("") ? AppInfo.APP_AUTHOR_NAME :description);
             holderImage.hItemText2.setText(jsonHomeF1ImageList.getLikes()+"");
             holderImage.hItemText3.setText(jsonHomeF1ImageList.getDownloads()+"");
             holderImage.hItemLin1.setOnClickListener(v -> onItemClickListener.onItemClick(v,position,jsonHomeF1ImageList));
@@ -170,7 +163,7 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
 
-    public void proImageHW(float h,float pro,ImageView imageView){
+    public static void proImageHW(Context context, float h,float pro,ImageView imageView){
 
         int i = (int) (h * pro);
         //阈值
@@ -181,6 +174,17 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
         layoutParams.height = Tools.dp2px(context, i);
-
     }
+
+    //设置清晰度
+    public static String getClarity(String string){
+        if (AppInfo.APP_HOME_IMAGE_PX == 0)
+            string =  string.replace("!w400","!w600");
+        else  if (AppInfo.APP_HOME_IMAGE_PX == 2)
+            string =  string.replace("!w400","!o");
+        else  if (AppInfo.APP_HOME_IMAGE_PX == 3)
+            string =  string.replace("!w400","");
+        return string;
+    }
+
 }

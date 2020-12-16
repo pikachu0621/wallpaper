@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_1">
+    android:layout_height="match_parent">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -59,7 +58,7 @@
                             android:layout_height="40dp"
                             android:layout_marginStart="16dp"
                             android:src="@drawable/ic_author"
-                            app:qmui_border_color="@color/white"
+                            app:qmui_border_color="@color/purple_1"
                             app:qmui_border_width="2dp"
                             app:qmui_is_circle="true" />
 
@@ -105,10 +104,10 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:elevation="0dp"
-            app:tabIndicatorColor="@color/black"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="2dp"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/purple"
+            app:tabIndicatorColor="@color/purple"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />

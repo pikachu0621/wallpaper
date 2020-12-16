@@ -1,81 +1,76 @@
 package com.pikachu.wallpaper.index.tow;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseSectionQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pikachu.wallpaper.R;
-import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
+import com.pikachu.wallpaper.cls.item.F2ItemData;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
+import com.pikachu.wallpaper.util.app.AppInfo;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 
-public class F2RecyclerAdapter extends RecyclerView.Adapter<F2RecyclerAdapter.ViewHolder> {
+public class F2RecyclerAdapter extends BaseMultiItemQuickAdapter<F2ItemData, BaseViewHolder> {
 
-
-    private final OnItemClickListener onItemClickListener;
     private final Context context;
-    private final List<JsonHomeTabsList> jsonHomeTabsLists;
+    private final OnItemClickListener onItemClickListener;
 
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList);
+        void onItemClick(View v, int position, JsonHomeTabsList jsonHomeTabsList);
     }
-
-
-    public F2RecyclerAdapter(Context context, List<JsonHomeTabsList> jsonHomeTabsLists, OnItemClickListener onItemClickListener) {
+    public F2RecyclerAdapter(Context context, List<F2ItemData> f2ItemData, OnItemClickListener onItemClickListener) {
+        super(f2ItemData);
         this.context = context;
-        this.jsonHomeTabsLists = jsonHomeTabsLists;
+        addItemType(F2ItemData.TEXT, R.layout.ui_text);
+        addItemType(F2ItemData.IMAGE,R.layout.ui_home_item1);
         this.onItemClickListener = onItemClickListener;
     }
 
-
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ui_home_item1, parent, false));
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        JsonHomeTabsList jsonHomeTabsList = jsonHomeTabsLists.get(position);
-        Glide.with(context).load(jsonHomeTabsList.getImageURl()).into(holder.hItem1Image1);
-        holder.hItem1Text2.setBackgroundColor(context.getResources().getColor(R.color.black_400));
-        holder.hItem1Text1.setText(jsonHomeTabsList.getTabStr());
-
-    }
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, F2ItemData f2ItemData) {
 
 
-    @Override
-    public int getItemCount() {
-        return jsonHomeTabsLists.size();
-    }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+        if (baseViewHolder.getItemViewType() == F2ItemData.TEXT){
+            TextView hItem1Text2 = baseViewHolder.getView(R.id.ui_text);
+            String tabStr = f2ItemData.getJsonHomeTabsList().getTabStr();
+            hItem1Text2.setText(tabStr);
+        }else {
 
-        private final ImageView hItem1Image1;
-        private final TextView hItem1Text2;
-        private final TextView hItem1Text1;
+            ImageView hItem1Image1= baseViewHolder.getView(R.id.h_item1_image1);
+            TextView hItem1Text2 = baseViewHolder.getView(R.id.h_item1_text2);
+            TextView hItem1Text1 = baseViewHolder.getView(R.id.h_item1_text1);
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            hItem1Image1 = itemView.findViewById(R.id.h_item1_image1);
-            hItem1Text2 = itemView.findViewById(R.id.h_item1_text2);
-            hItem1Text1 = itemView.findViewById(R.id.h_item1_text1);
+            Glide.with(context)
+                    .load(f2ItemData.getJsonHomeTabsList().getImageURl())
+                    .transition(DrawableTransitionOptions.withCrossFade(AppInfo.APP_ANIMATION_TIME))
+                    .into(hItem1Image1);
+            hItem1Text2.setBackgroundColor(context.getResources().getColor(R.color.black_400));
+            hItem1Text2.setOnClickListener(v -> onItemClickListener.onItemClick(v,baseViewHolder.getAdapterPosition(),f2ItemData.getJsonHomeTabsList()));
+            hItem1Text1.setText(f2ItemData.getJsonHomeTabsList().getTabStr());
+
         }
+
+
+
     }
+
+
+
+
+
 
 
 }

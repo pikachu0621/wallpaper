@@ -56,10 +56,13 @@ dependencies {
     //eventbus 用于刷新ui
     implementation 'org.greenrobot:eventbus:3.2.0'
 
-    //ViewPager
+    //快速轮播实现
     implementation 'com.to.aboomy:pager2banner:1.0.1'
 
     //快速RecyclerView.adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    //背景模糊 控件
+    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
 
 }
