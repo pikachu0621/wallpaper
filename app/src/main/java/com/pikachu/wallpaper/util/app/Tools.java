@@ -19,13 +19,18 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.pikachu.wallpaper.cls.item.LookData;
+import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
+import com.pikachu.wallpaper.look.LookImageActivity;
+import com.pikachu.wallpaper.util.base.BaseActivity;
 import com.pikachu.wallpaper.util.url.LoadUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -282,6 +287,41 @@ public class Tools {
     }
 
 
+
+
+
+
+
+
+    ///////////////////////////  Look Image of Activity /////////////////////////
+
+
+    //高清图片
+    public static String hdImage(String url){
+
+        return url.replace("!w400","").replace("!o","").replace("!w600","").replace("!","");
+
+    }
+
+
+
+
+
+    //任何地方跳转查看图片大图
+    public static void startLookImage(Activity activity, int page, int pointer, JsonHomeTabsList imageTab, List<JsonHomeF1ImageList> imageDataList){
+        startLookImage(activity,new LookData(page,pointer,imageTab,imageDataList));
+    }
+
+
+    //任何地方跳转查看图片大图
+    public static void startLookImage(Activity activity, LookData lok){
+        Intent intent = new Intent(activity, LookImageActivity.class);
+        if (lok == null)
+            lok = new LookData();
+        intent.putExtra(AppInfo.APP_KEY_LOOK_IMAGE,lok);
+        activity.startActivity(intent);
+
+    }
 
 
 

@@ -7,5 +7,4 @@
     android:text="@string/app_author"
     android:padding="@dimen/dp_10"
     android:lines="1"
-    android:textColor="@color/black"
     android:ellipsize="end"/>

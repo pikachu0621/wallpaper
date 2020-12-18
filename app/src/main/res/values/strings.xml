@@ -11,4 +11,5 @@
     <string name="app_f3_download">我的下载</string>
     <string name="app_f3_history">历史浏览</string>
     <string name="app_f3_settings">关于设置</string>
+    <string name="app_settings_wallpaper">设置壁纸</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.pikachu.wallpaper.cls.json;
 
 
-public class JsonBing {
+public class JsonBing  {
 
     public Integer getStatus() {
         return status;

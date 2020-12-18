@@ -181,6 +181,7 @@ public class TowFragment extends BaseFragment implements F2RecyclerAdapter.OnIte
         QMUIStatusBarHelper.setStatusBarLightMode(activity);
         mF1RRefreshLayout.autoRefresh();//自动刷新
         load();
+        mF2Image1.setOnClickListener(this::onClickSeek);
     }
 
     private void initView() {
@@ -202,13 +203,19 @@ public class TowFragment extends BaseFragment implements F2RecyclerAdapter.OnIte
     //点击事件
     @Override
     public void onItemClick(View v, int position, JsonHomeTabsList jsonHomeTabsList) {
-
+        Tools.showToast(activity, "点击了 F2 的第"+position+"个ITEM\nTAG->"+jsonHomeTabsList.getTabStr());
     }
 
 
     //top图片点击
     @Override
     public void onClick() {
+        Tools.showToast(activity, "TopImage");
+    }
 
+
+    //点击收索
+    public void onClickSeek(View view) {
+        Tools.showToast(activity, "Seek");
     }
 }

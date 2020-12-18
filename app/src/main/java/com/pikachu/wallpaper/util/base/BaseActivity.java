@@ -1,22 +1,16 @@
 package com.pikachu.wallpaper.util.base;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.state.PKStatusBarActivity;
 import com.pikachu.wallpaper.util.state.PKStatusBarTools;
@@ -123,6 +117,11 @@ public abstract class BaseActivity extends PKStatusBarActivity {
     public float getFloatExtra(String name, float defaultValue) {
         intent = getIntent();
         return intent.getFloatExtra(name, defaultValue);
+    }
+
+
+    public <T> T getSerializableExtra(String name,Class<T> cls) {
+        return  (T) getIntent().getSerializableExtra(name);
     }
 
 

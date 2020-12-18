@@ -1,3 +1,9 @@
+/**
+ *
+ * 用于F2 fragment 多item 的数据封装
+ *
+ */
+
 package com.pikachu.wallpaper.cls.item;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;

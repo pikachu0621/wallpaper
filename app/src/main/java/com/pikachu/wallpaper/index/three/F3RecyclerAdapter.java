@@ -42,13 +42,13 @@ public class F3RecyclerAdapter extends BaseQuickAdapter<JsonHomeF1ImageList ,  B
     protected void convert(@NotNull BaseViewHolder baseViewHolder, JsonHomeF1ImageList jsonHomeF1ImageList) {
 
 
-        ImageView image1 = (ImageView) baseViewHolder.getView(R.id.h_item_image1);
-        ImageView image2 = (ImageView) baseViewHolder.getView(R.id.h_item_image2);
-        ImageView image3 = (ImageView) baseViewHolder.getView(R.id.h_item_image3);
-        TextView textView1 = (TextView) baseViewHolder.getView(R.id.h_item_text1);
-        TextView textView2 = (TextView) baseViewHolder.getView(R.id.h_item_text2);
-        TextView textView3 = (TextView) baseViewHolder.getView(R.id.h_item_text3);
-        RelativeLayout relativeLayout =(RelativeLayout) baseViewHolder.getView(R.id.h_item_relative1);
+        ImageView image1 =  baseViewHolder.getView(R.id.h_item_image1);
+        ImageView image2 =  baseViewHolder.getView(R.id.h_item_image2);
+        ImageView image3 =  baseViewHolder.getView(R.id.h_item_image3);
+        TextView textView1 =  baseViewHolder.getView(R.id.h_item_text1);
+        TextView textView2 =  baseViewHolder.getView(R.id.h_item_text2);
+        TextView textView3 =  baseViewHolder.getView(R.id.h_item_text3);
+        RelativeLayout relativeLayout = baseViewHolder.getView(R.id.h_item_relative1);
 
         // 比例缩小 并设置imageView 高
         F1RecyclerAdapter.proImageHW(context,jsonHomeF1ImageList.getHeight(), AppInfo.APP_HOME_ITEM_PRO, image1);
@@ -62,7 +62,7 @@ public class F3RecyclerAdapter extends BaseQuickAdapter<JsonHomeF1ImageList ,  B
         textView1.setText(description==null || description.equals("") ? AppInfo.APP_AUTHOR_NAME :description);
         textView2.setText(jsonHomeF1ImageList.getLikes()+"");
         textView3.setText(jsonHomeF1ImageList.getDownloads()+"");
-        relativeLayout.setOnClickListener(v -> onItemClickListener.onItemClick(v,baseViewHolder.getAdapterPosition(),jsonHomeF1ImageList));
+        relativeLayout.setOnClickListener(v -> onItemClickListener.onItemClick(v,baseViewHolder.getAdapterPosition(),jsonHomeF1ImageList,getData()));
         image2.setOnClickListener(v -> onItemClickListener.onItemDownLoadClick(v,baseViewHolder.getAdapterPosition(),jsonHomeF1ImageList));
         image3.setOnClickListener(v -> onItemClickListener.onItemLikeClick(v,baseViewHolder.getAdapterPosition(),jsonHomeF1ImageList));
 

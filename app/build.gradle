@@ -50,11 +50,6 @@ dependencies {
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'  //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.1' //经典刷新头
 
-    //数据库
-    implementation 'org.greenrobot:greendao:3.3.0'
-
-    //eventbus 用于刷新ui
-    implementation 'org.greenrobot:eventbus:3.2.0'
 
     //快速轮播实现
     implementation 'com.to.aboomy:pager2banner:1.0.1'
@@ -64,5 +59,17 @@ dependencies {
 
     //背景模糊 控件
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
+
+
+    //数据库
+    implementation 'org.greenrobot:greendao:3.3.0'
+
+    //eventbus 用于刷新ui
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+
+    //缩放图片
+    //noinspection GradleDependency
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
 }

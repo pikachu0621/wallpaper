@@ -20,7 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
+import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.index.one.F1RecyclerAdapter;
+import com.pikachu.wallpaper.index.one.ImageAdapter;
 import com.pikachu.wallpaper.util.app.AppInfo;
 import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.base.BaseFragment;
@@ -35,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnItemClickListener, F3BarView.onBarPageClick {
+public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnItemClickListener, F3SettingsView.OnSettingsClickListener, ImageAdapter.OnTopClickListener {
 
     private int page;
     private View inflate;
@@ -124,7 +126,7 @@ public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnI
                         f3BarView = new F3BarView(activity, ThreeFragment.this);
                         //头尾插入
                         recyclerAdapter.addHeaderView(f3BarView.getView(), 0);
-                        recyclerAdapter.addHeaderView(new F3SettingsView(activity).getView(), 1);
+                        recyclerAdapter.addHeaderView(new F3SettingsView(activity,ThreeFragment.this).getView(), 1);
 
                     } else
                         recyclerAdapter.addList(jsonHomeF1ImageLists);
@@ -175,6 +177,7 @@ public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnI
         QMUIStatusBarHelper.setStatusBarLightMode(activity);
         mF1RRefreshLayout.autoRefresh();//自动刷新
         load(true);
+        mF2Image1.setOnClickListener(this::onClickSeek);
     }
 
     private void initView() {
@@ -217,54 +220,63 @@ public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnI
 
     //item 点击
     @Override
-    public void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+    public void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList, List<JsonHomeF1ImageList> jsonHomeF1ImageLists) {
+        Tools.showToast(activity, "Item");
+        Tools.startLookImage(activity,page,position-1,new JsonHomeTabsList("","","",false), jsonHomeF1ImageLists);
 
     }
 
-    //下载点击
+    //item 下载点击
     @Override
-    public void onItemDownLoadClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+    public void onItemDownLoadClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) { }
 
-    }
-
-    //收藏点击
+    //item 收藏点击
     @Override
     public void onItemLikeClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
 
     }
 
 
-    //点击收藏
-    public void onClickKeep(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
-
-    }
-
-    //点击下载
-    public void onClickDownLoad(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
-
-    }
-
-    //点击历史
-    public void onClickHistory(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
-
-    }
-
-    //点击设置
-    public void onClickSettings(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
-
-    }
-
     //点击轮播
     @Override
-    public void onPageClick() {
+    public void onTopClick(int position, JsonHomeF1ImageList s, List<JsonHomeF1ImageList> list) {
+        Tools.showToast(activity, position+"");
+
+        Tools.startLookImage(activity,-1,position/*<= 0 ? 0 : position-1*/,null, list);
 
     }
 
 
     //点击收索
-    public void onClickSeek(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
-
+    public void onClickSeek(View view) {
+        Tools.showToast(activity, "Seek");
     }
+
+
+    //点击收藏
+    @Override
+    public void onKeepClick(View view) {
+        Tools.showToast(activity, "Keep");
+    }
+
+    //点击下载
+    @Override
+    public void onDownloadClick(View view) {
+        Tools.showToast(activity, "Download");
+    }
+
+    //点击历史
+    @Override
+    public void onHistoryClick(View view) {
+        Tools.showToast(activity, "History");
+    }
+
+    //点击设置
+    @Override
+    public void onSettingClick(View view) {
+        Tools.showToast(activity, "Settings");
+    }
+
 
 
 }

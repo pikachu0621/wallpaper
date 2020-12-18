@@ -21,7 +21,7 @@ public class AppInfo {
 
     //分类
     public static final int APP_HOME_F2_ITEM_NUMBER = 3;            //分类一行几个item               可选值   1，2，3，4.....
-    public static final int APP_HOME_F2_RM = 5;                     //分类 热门分类有几个                  可选值   [1,MAX]
+    public static final int APP_HOME_F2_RM = 5;                     //分类 热门分类有几个             可选值   [1,MAX]
 
     //我的
     public static final long APP_HOME_F3_AUTO_TIME = 6;             //我的 轮播时间                                   可选值   (0,Max]  单位 秒
@@ -43,8 +43,17 @@ public class AppInfo {
 
 
 
+    ///////////////////////////////////////////  Activity  Key of Data ///////////////////////////
+    //Activity跳转
+    public static final String APP_KEY_LOOK_IMAGE ="APP_START_LOOK_IMAGE";
+
+
+
+
+
+
     ////////////    API     ///////
-    //用于加载小说列表
+    //用于加载图片列表
     public static final String APP_API_IMAGE_LIST = "https://api.ihansen.org/img/detail?page={page}&index=&orderBy={tabs}&tag={tag}&favorites=";
     public static final String APP_API_TABS_LIST ="https://photo.ihansen.org";
     //必应每日一图
@@ -66,6 +75,35 @@ public class AppInfo {
         return getUrl(jsonHomeTabsList,page);
     }
 
+
+
+
+
+
+
+
+
+    /*
+
+
+
+    /＼7　　　 ∠ /
+    /　│　　 ／　／
+    │　Z ＿,＜　／　　 /`ヽ
+    │　　　　　ヽ　　 /　　〉
+    Y　　　　　`　 /　　/
+    ｲ●　､　●　　⊂⊃〈　　/
+    （）　 へ　　　　|　＼〈
+    >ｰ ､_　 ィ　 │ ／／
+    / へ　　 /　ﾉ＜| ＼＼
+    ヽ_ﾉ　　（_／　 │／／
+    7　　　　　　　|／
+    ＞―r￣￣`ｰ―＿丿😘
+
+
+
+    吉祥物
+    */
 
 
 

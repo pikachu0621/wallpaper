@@ -1,6 +1,16 @@
+/**
+ * 用于tab数据封装
+ *
+ *
+ *
+ */
+
+
 package com.pikachu.wallpaper.cls.json;
 
-public class JsonHomeTabsList {
+import java.io.Serializable;
+
+public class JsonHomeTabsList implements Serializable {
     private String imageURl;
     private String tabStr;
     private String tagE;

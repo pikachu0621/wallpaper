@@ -1,15 +1,11 @@
 package com.pikachu.wallpaper.index.one;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -19,13 +15,13 @@ import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.util.app.AppInfo;
+import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.base.BaseFragment;
 import com.pikachu.wallpaper.util.url.LoadUrl;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.pikachu.wallpaper.util.app.Tools.getItem;
@@ -157,8 +153,9 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
 
     //item 点击
     @Override
-    public void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList) {
+    public void onItemClick(View v, int position, JsonHomeF1ImageList jsonHomeF1ImageList, List<JsonHomeF1ImageList> jsonHomeF1ImageLists) {
         showToast(activity,"点击列表"+position);
+        Tools.startLookImage(activity,page,position,this.jsonHomeTabsList, jsonHomeF1ImageLists);
     }
 
     //下载点击

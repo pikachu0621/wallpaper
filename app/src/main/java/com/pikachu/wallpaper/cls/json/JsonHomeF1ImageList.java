@@ -1,10 +1,14 @@
+/**
+ * 用于列表的 数据加载
+ */
 package com.pikachu.wallpaper.cls.json;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class JsonHomeF1ImageList {
+public class JsonHomeF1ImageList implements Serializable {
 
 
     public Integer getId() {
@@ -176,7 +180,7 @@ public class JsonHomeF1ImageList {
 
 
 
-    public static class InfoBean {
+    public static class InfoBean  implements Serializable {
         public Integer getLikes() {
             return likes;
         }
@@ -292,7 +296,7 @@ public class JsonHomeF1ImageList {
         private List<TagsBean> tags;
 
 
-        public static class ExifBean {
+        public static class ExifBean  implements Serializable {
             public String getMake() {
                 return make;
             }
@@ -358,7 +362,7 @@ public class JsonHomeF1ImageList {
             private Integer iso;
         }
 
-        public static class LocationBean {
+        public static class LocationBean  implements Serializable {
             public PositionBean getPosition() {
                 return position;
             }
@@ -374,7 +378,7 @@ public class JsonHomeF1ImageList {
             private PositionBean position;
 
 
-            public static class PositionBean {
+            public static class PositionBean  implements Serializable {
                 public float getLatitude() {
                     return latitude;
                 }
@@ -402,7 +406,7 @@ public class JsonHomeF1ImageList {
         }
 
 
-        public static class UserBean {
+        public static class UserBean  implements Serializable {
             public String getId() {
                 return id;
             }
@@ -557,7 +561,7 @@ public class JsonHomeF1ImageList {
             private Integer total_photos;
             private LinksBean links;
 
-            public static class ProfileImageBean {
+            public static class ProfileImageBean  implements Serializable {
                 public String getLarge() {
                     return large;
                 }
@@ -574,7 +578,7 @@ public class JsonHomeF1ImageList {
             }
 
 
-            public static class LinksBean {
+            public static class LinksBean  implements Serializable {
                 public String getHtml() {
                     return html;
                 }
@@ -592,7 +596,7 @@ public class JsonHomeF1ImageList {
         }
 
 
-        public static class UrlsBean {
+        public static class UrlsBean  implements Serializable {
             public String getRaw() {
                 return raw;
             }
@@ -649,7 +653,7 @@ public class JsonHomeF1ImageList {
         }
 
 
-        public static class TagsBean {
+        public static class TagsBean  implements Serializable {
             public String getTitle() {
                 return title;
             }

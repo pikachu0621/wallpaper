@@ -36,7 +36,7 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     public interface OnItemClickListener{
-        void onItemClick(View v,int position,JsonHomeF1ImageList jsonHomeF1ImageList);
+        void onItemClick(View v,int position,JsonHomeF1ImageList jsonHomeF1ImageList,List<JsonHomeF1ImageList> jsonHomeF1ImageLists);
         void onItemDownLoadClick(View v,int position,JsonHomeF1ImageList jsonHomeF1ImageList);
         void onItemLikeClick(View v,int position,JsonHomeF1ImageList jsonHomeF1ImageList);
     }
@@ -105,7 +105,7 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holderImage.hItemText1.setText(description==null || description.equals("") ? AppInfo.APP_AUTHOR_NAME :description);
             holderImage.hItemText2.setText(jsonHomeF1ImageList.getLikes()+"");
             holderImage.hItemText3.setText(jsonHomeF1ImageList.getDownloads()+"");
-            holderImage.hItemLin1.setOnClickListener(v -> onItemClickListener.onItemClick(v,position,jsonHomeF1ImageList));
+            holderImage.hItemLin1.setOnClickListener(v -> onItemClickListener.onItemClick(v,position,jsonHomeF1ImageList,jsonHomeF1ImageLists ));
             holderImage.hItemImage2.setOnClickListener(v -> onItemClickListener.onItemDownLoadClick(v,position,jsonHomeF1ImageList));
             holderImage.hItemImage3.setOnClickListener(v -> onItemClickListener.onItemLikeClick(v,position,jsonHomeF1ImageList));
 

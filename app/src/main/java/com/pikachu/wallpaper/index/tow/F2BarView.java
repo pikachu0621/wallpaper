@@ -71,6 +71,7 @@ public class F2BarView {
                             .load(jsonBing.getBing().getUrl())
                             .transition(DrawableTransitionOptions.withCrossFade(AppInfo.APP_ANIMATION_TIME))
                             .into(mF2BarQmui);
+                    //mF2BarText.setText(jsonBing.getBing().getCopyright());
                     mF2BarText.setText(jsonBing.getBing().getCopyright());
                 }
 

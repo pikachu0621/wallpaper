@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/look_pager"/>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:id="@+id/look_lin1"
+        android:background="@color/black_400">
+
+        <ImageView
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_f3_keep"
+            android:padding="14dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/look_keep"/>
+
+        <ImageView
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_f3_download"
+            android:padding="14dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:id="@+id/look_download" />
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
+            app:cardBackgroundColor="@color/white_A0F"
+            app:cardCornerRadius="18dp"
+            app:cardMaxElevation="0dp"
+            app:cardElevation="0dp"
+            android:elevation="0dp">
+
+            <!--  模糊背景
+            <com.github.mmin18.widget.RealtimeBlurView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:realtimeBlurRadius="26dp"
+                app:realtimeOverlayColor="@color/black_400" />
+            -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/look_text1"
+                android:theme="@style/index_text_bottom1"
+                android:text="@string/app_settings_wallpaper"
+                android:gravity="center"
+                android:lines="1" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
+
+
+    <!--
+        <com.github.chrisbanes.photoview.PhotoView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/look_image"
+            android:background="@color/black"/>
+    -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_400"
+        android:orientation="vertical"
+        android:id="@+id/look_relative1">
+
+
+       <!--  模糊背景
+       <com.github.mmin18.widget.RealtimeBlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:realtimeBlurRadius="26dp"
+            android:layout_alignTop="@id/look_view"
+            android:layout_alignBottom="@id/look_toolbar"
+            app:realtimeOverlayColor="@color/black_400"/>
+        -->
+
+        <View
+            android:id="@+id/look_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/look_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_below="@id/look_view"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

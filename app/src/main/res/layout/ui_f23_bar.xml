@@ -21,7 +21,8 @@
             android:layout_alignTop="@id/m_f2_view"
             android:layout_alignBottom="@id/m_f2_lin1"
             android:background="@color/white"
-            android:alpha="0"/>
+            android:alpha="0"
+            app:realtimeOverlayColor="@color/white_A0F"/>
 
         <LinearLayout
             android:id="@+id/m_f2_lin1"
