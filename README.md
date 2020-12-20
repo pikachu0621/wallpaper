@@ -20,8 +20,8 @@ Android 壁纸软件
 
 下载apk
 ---
->[Github-下载](/app/release/app-release.apk)
->[国内下载](https://wwa.lanzous.com/i6zhqjjwoqf)
+>1. [Github-下载](https://raw.githubusercontent.com/2825436553/wallpaper/master/app/release/app-release.apk)
+>2. [国内下载](https://wwa.lanzous.com/i6zhqjjwoqf)
 
 效果图
 ===
