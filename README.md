@@ -1,6 +1,7 @@
 wallpaper
 ==============
 Android 壁纸软件，毕业设计，无其他用途
+<br>
 *by：Pikachu_WeChat
 
 效果图
