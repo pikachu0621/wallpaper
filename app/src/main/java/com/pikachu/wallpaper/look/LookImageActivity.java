@@ -3,28 +3,42 @@
  * 支持加载后一页
  * 支持双指放大，缩小，单指移动，切换图片
  * pikachu
- *
  */
 
 package com.pikachu.wallpaper.look;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
-import com.github.chrisbanes.photoview.PhotoView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.request.transition.ViewPropertyTransition;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pikachu.wallpaper.R;
@@ -34,12 +48,14 @@ import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.util.adapter.PagerAdapter;
 import com.pikachu.wallpaper.util.app.AppInfo;
 import com.pikachu.wallpaper.util.base.BaseActivity;
+import com.pikachu.wallpaper.util.gaussian.Gaussian;
 import com.pikachu.wallpaper.util.state.PKStatusBarTools;
 import com.pikachu.wallpaper.util.url.LoadUrl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-// import com.pikachu.wallpaper.widget.ZoomImageView;
+
 
 public class LookImageActivity extends BaseActivity implements View.OnClickListener {
 
@@ -58,6 +74,9 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
     private ArrayList<Fragment> fragments;
     private int currentDataMaxSize;
     private int minPager;
+    private ImageView lookImage1;
+    private Bitmap bitmapLod;
+    private boolean isLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +86,7 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
         init();
     }
 
-    @Override
-    public PKStatusBarTools pkStatusBarTools() {
-        PKStatusBarTools pkStatusBarTools = PKStatusBarTools.with(this).noToNON();
-        pkStatusBarTools.init();
-        return pkStatusBarTools;
-    }
+
 
     private void init() {
         setSupportActionBar(lookToolbar);
@@ -83,24 +97,25 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
         pointer = serializableExtra.getPointer();
         page = serializableExtra.getPage();
         imageTab = serializableExtra.getImageTab();
-        if (imageTab != null) minPager = imageTab.getTagE().equals("today") ?  1 :  page;
+        if (imageTab != null) minPager = imageTab.getTagE().equals("today") ? 1 : page;
         else minPager = page;
-        List<JsonHomeF1ImageList> imageData= serializableExtra.getImageDataList();
+        List<JsonHomeF1ImageList> imageData = serializableExtra.getImageDataList();
 
         imageDataList = new ArrayList<>();
         fragments = new ArrayList<>();
-        for (JsonHomeF1ImageList jsonHomeF1ImageList : imageData){
+        for (JsonHomeF1ImageList jsonHomeF1ImageList : imageData) {
             if (jsonHomeF1ImageList.isTimeItem()) {
                 pointer--;
                 continue;
             }
             imageDataList.add(jsonHomeF1ImageList);
-            fragments.add(new LookImageFragment(jsonHomeF1ImageList.getSmallUrl(), LookImageActivity.this));
+            fragments.add(new LookImageFragment(jsonHomeF1ImageList.getRaw(), LookImageActivity.this));
         }
 
 
         setHead(true, getImageTitle(pointer), null, this::finish);
         currentDataMaxSize = imageDataList.size();
+
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), fragments);
         lookPager.setAdapter(pagerAdapter);
         lookPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -112,8 +127,9 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
             public void onPageSelected(int position) {
                 setCurrentImageData(getImageTitle(position), false, false);
 
-                if (position == currentDataMaxSize-1)
+                if (position == currentDataMaxSize - 1)
                     addImageData();
+                loadGaussianBg(position);
             }
 
             @Override
@@ -121,8 +137,39 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
             }
         });
         lookPager.setCurrentItem(pointer);
+        //如果点击的是第一张图片 则调用一次高斯模糊
+        if (pointer == 0)
+            loadGaussianBg(pointer);
 
 
+        lookText1.setOnClickListener(v -> setWallpaper());
+
+    }
+
+    //加载高斯背景
+    private void loadGaussianBg(int position) {
+
+        if (!AppInfo.APP_LOOK_GSN) return;
+        Glide.with(this)
+                .asBitmap()
+                .load(imageDataList.get(position).getSmallUrl())
+                .override(320)
+                .into(new SimpleTarget<Bitmap>() {
+                    @SuppressLint("UseCompatLoadingForDrawables")
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+
+                        //动画 图片置换效果
+                        Drawable[] drawables = new Drawable[]{
+                                bitmapLod == null ? getResources().getDrawable(android.R.color.transparent) : new BitmapDrawable(bitmapLod),
+                                new BitmapDrawable((bitmapLod = Gaussian.doBlur(resource, AppInfo.APP_LOOK_GSN_R)))
+                        };
+                        TransitionDrawable td = new TransitionDrawable(drawables);
+                        lookImage1.setImageDrawable(td);
+                        td.setCrossFadeEnabled(true);
+                        td.startTransition(AppInfo.APP_ANIMATION_TIME);
+                    }
+                });
     }
 
     private void initView() {
@@ -135,24 +182,55 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
         lookDownload = findViewById(R.id.look_download);
         lookText1 = findViewById(R.id.look_text1);
         lookRelative1 = findViewById(R.id.look_relative1);
+        lookImage1 = findViewById(R.id.look_image1);
     }
 
 
+    //设置壁纸
+    private void setWallpaper() {
+
+        int currentItem = lookPager.getCurrentItem();
+        Glide.with(this)
+                .asBitmap()
+                .load(imageDataList.get(currentItem).getRaw())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        try {
+                            setWallpaper(resource);
+                            showToast("设置完成");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            showToast("设置失败");
+                        }
+                    }
+                });
+
+        /*Intent intent = new Intent(Intent.ACTION_ATTACH_DATA);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra("mimeType", "image/*");
+        Uri uri = Uri.parse(MediaStore.Images.Media
+                .insertImage(this.getContentResolver(), bitmap, null, null));
+        intent.setData(uri);
+        startActivityForResult(intent, *//*SET_WALLPAPER*//*1);*/
+    }
 
 
     //滑动到低加载更多 左右加
     private void addImageData() {
-        if (page == -1 || imageTab == null) return;
+        if (page == -1 || imageTab == null || isLoad) return;
 
-        page ++;
+        page++;
 
         showToast("开始加载下一页");
+        isLoad = true;
         new LoadUrl(this, AppInfo.getUrl(imageTab, page), new LoadUrl.OnCall() {
             ///加载失败
             @Override
             public void error(Exception e) {
-                showToast(e.getMessage());
+                showToast("下一页加载失败\n"+e.getMessage());
                 if (page > minPager) page--;
+                isLoad = false;
             }
 
             ///加载成功
@@ -162,24 +240,17 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
                 }.getType());
                 imageDataList.addAll(imageData);
 
-                for (JsonHomeF1ImageList list:imageData)
-                    fragments.add(new LookImageFragment(list.getSmallUrl(), LookImageActivity.this));
+                for (JsonHomeF1ImageList list : imageData)
+                    fragments.add(new LookImageFragment(list.getRaw(), LookImageActivity.this));
 
                 currentDataMaxSize += imageData.size();
                 pagerAdapter.notifyDataSetChanged();
                 showToast("加载完成");
+                isLoad = false;
             }
         });
 
     }
-
-
-
-
-
-
-
-
 
 
     //设置数据
@@ -240,20 +311,50 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
         setAnimator(lookRelative1, lookLin1, lookRelative1.getVisibility() == View.GONE);
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_look_info, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        //设置桌面壁纸
+        if (item.getItemId() == R.id.menu_1) {
+
+            return true;
+        }
+
+        //锁屏壁纸
+        if (item.getItemId() == R.id.menu_2) {
+            return true;
+        }
+
+        //设置全部
+        if (item.getItemId() == R.id.menu_2) {
+            return true;
+        }
 
 
-
-
-
-
-
+        //分享
+        if (item.getItemId() == R.id.menu_4) {
+            showToast("可以保存后分享");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

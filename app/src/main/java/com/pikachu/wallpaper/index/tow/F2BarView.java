@@ -72,7 +72,8 @@ public class F2BarView {
                             .transition(DrawableTransitionOptions.withCrossFade(AppInfo.APP_ANIMATION_TIME))
                             .into(mF2BarQmui);
                     //mF2BarText.setText(jsonBing.getBing().getCopyright());
-                    mF2BarText.setText(jsonBing.getBing().getCopyright());
+                    String copyright = jsonBing.getBing().getCopyright();
+                    mF2BarText.setText( copyright == null || copyright.equals("") ? AppInfo.APP_AUTHOR_NAME : copyright );
                 }
 
 

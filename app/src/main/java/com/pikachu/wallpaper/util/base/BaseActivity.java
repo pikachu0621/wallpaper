@@ -31,18 +31,24 @@ public abstract class BaseActivity extends PKStatusBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setPkStatusBarTools(pkStatusBarTools());
-
     }
 
 
 
+
     //设置沉浸式状态栏 //返回null为不设置
-    public abstract PKStatusBarTools pkStatusBarTools();
+    public PKStatusBarTools pkStatusBarTools(){
+        PKStatusBarTools pkStatusBarTools = PKStatusBarTools.with(this).noToNON();
+        pkStatusBarTools.init();
+        return pkStatusBarTools;
+    }
 
 
     public void setContentView(@LayoutRes int layoutResID,@IdRes int statusResID) {
         super.setContentView(layoutResID);
-        setPlaceholderView(statusResID);
+        if (statusResID != 0)
+            setPlaceholderView(statusResID);
+
     }
 
 
@@ -89,16 +95,17 @@ public abstract class BaseActivity extends PKStatusBarActivity {
     public ActionBar setHead(boolean isShowHome, String title,
                              String subTitle, OnBackEvent onBackEvent) {
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(isShowHome);
-        if (title != null)
-            actionBar.setTitle(title);
-        if (subTitle != null)
-            actionBar.setSubtitle(subTitle);
-        this.onBackEvent = onBackEvent;
-
+        if (actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(isShowHome);
+            if (title != null)
+                actionBar.setTitle(title);
+            if (subTitle != null)
+                actionBar.setSubtitle(subTitle);
+            this.onBackEvent = onBackEvent;
+        }
         return actionBar;
     }
+
 
 
     /**

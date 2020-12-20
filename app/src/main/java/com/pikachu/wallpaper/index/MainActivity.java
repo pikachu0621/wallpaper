@@ -48,12 +48,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @Override
-    public PKStatusBarTools pkStatusBarTools() {
-        PKStatusBarTools pkStatusBarTools = PKStatusBarTools.with(this).noToNON();
-        pkStatusBarTools.init();
-        return pkStatusBarTools;
-    }
 
 
     @Override

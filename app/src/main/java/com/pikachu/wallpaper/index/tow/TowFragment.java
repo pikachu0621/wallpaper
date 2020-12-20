@@ -204,6 +204,9 @@ public class TowFragment extends BaseFragment implements F2RecyclerAdapter.OnIte
     @Override
     public void onItemClick(View v, int position, JsonHomeTabsList jsonHomeTabsList) {
         Tools.showToast(activity, "点击了 F2 的第"+position+"个ITEM\nTAG->"+jsonHomeTabsList.getTabStr());
+
+        Tools.startSearchImage(activity,jsonHomeTabsList);
+
     }
 
 

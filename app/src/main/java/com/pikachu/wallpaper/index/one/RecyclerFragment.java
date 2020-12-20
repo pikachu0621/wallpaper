@@ -107,9 +107,9 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
 
 
                     if (recyclerAdapter == null || isUpData) {
-                        recyclerAdapter = new F1RecyclerAdapter(activity, jsonHomeF1ImageLists , RecyclerFragment.this);
+                        recyclerAdapter = new F1RecyclerAdapter(activity,AppInfo.APP_HOME_F1_ITEM_STYLE, jsonHomeF1ImageLists , RecyclerFragment.this);
 
-                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(AppInfo.APP_HOME_F1_ITEM_NUMBER, StaggeredGridLayoutManager.VERTICAL);
                         //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//防止Item切换
                         mF1RRecycler.setLayoutManager(layoutManager);
                         mF1RRecycler.setAdapter(recyclerAdapter);

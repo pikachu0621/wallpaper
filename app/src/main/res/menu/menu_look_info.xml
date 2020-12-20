@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_1"
+        android:title="设置桌面壁纸"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_2"
+        android:title="设置锁屏壁纸"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_3"
+        android:title="设置桌面和锁屏壁纸"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_4"
+        android:title="分享"
+        app:showAsAction="never" />
+
+</menu><!-- ifRoom表示有空间则显示，never表示从不显示，而是会通过	overflowwindow显示。
+         这是基础的Menu 还有一篇专门讲 menu 的 -->

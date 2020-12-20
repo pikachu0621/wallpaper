@@ -45,6 +45,8 @@ dependencies {
     //图片缓存工具
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //高斯模糊
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
 
     //下拉刷新
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'  //核心必须依赖

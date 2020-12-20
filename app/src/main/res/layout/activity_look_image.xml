@@ -7,12 +7,19 @@
 
 
 
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/look_image1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
 
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/look_pager"/>
+        android:id="@+id/look_pager"
+        android:background="@android:color/transparent"/>
 
 
 
@@ -40,7 +47,7 @@
             android:layout_width="?actionBarSize"
             android:layout_height="match_parent"
             android:src="@drawable/ic_f3_download"
-            android:padding="14dp"
+            android:padding="13dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="20dp"
             android:id="@+id/look_download" />

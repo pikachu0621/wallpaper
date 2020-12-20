@@ -1,6 +1,7 @@
 package com.pikachu.wallpaper.index.three;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.index.one.F1RecyclerAdapter;
 import com.pikachu.wallpaper.index.one.ImageAdapter;
+import com.pikachu.wallpaper.other.OtherActivity;
 import com.pikachu.wallpaper.util.app.AppInfo;
 import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.base.BaseFragment;
@@ -117,7 +119,7 @@ public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnI
                     if (recyclerAdapter == null || isUpData) {
 
                         recyclerAdapter = new F3RecyclerAdapter(activity, jsonHomeF1ImageLists, ThreeFragment.this);
-                        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        layoutManager = new StaggeredGridLayoutManager(AppInfo.APP_HOME_F3_ITEM_NUMBER, StaggeredGridLayoutManager.VERTICAL);
                         //
                         // layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//防止Item切换
                         mF1RRecycler.setLayoutManager(layoutManager);
@@ -275,6 +277,11 @@ public class ThreeFragment extends BaseFragment implements F1RecyclerAdapter.OnI
     @Override
     public void onSettingClick(View view) {
         Tools.showToast(activity, "Settings");
+
+        Intent intent = new Intent(activity, OtherActivity.class);
+        intent.putExtra(AppInfo.APP_KEY_LOOK_IMAGE,0);
+        intent.putExtra(AppInfo.APP_KEY_OTHER_STR,"关于设置");
+        startActivity(intent);
     }
 
 

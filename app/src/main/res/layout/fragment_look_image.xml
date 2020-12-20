@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
+
     <com.github.chrisbanes.photoview.PhotoView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         android:id="@+id/look_fragment_image1"/>
+    <!--android:background="@color/black"-->
 
 
     <com.pikachu.wallpaper.widget.CircularProgressView

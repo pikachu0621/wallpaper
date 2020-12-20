@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pikachu.wallpaper">
     <!-- 网络状态权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 设置壁纸 -->
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
     <application
         android:allowBackup="true"
@@ -16,11 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wallpaper"
         tools:targetApi="n">
-        <activity android:name=".look.LookImageActivity"
-            android:theme="@style/Theme.Wallpaper2"/>
-        <activity
-            android:name=".index.MainActivity"
-            android:theme="@style/Theme.Wallpaper2">
+        <activity android:name=".other.OtherActivity"></activity>
+        <activity android:name=".search.SearchActivity" />
+        <activity android:name=".look.LookImageActivity" />
+        <activity android:name=".index.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

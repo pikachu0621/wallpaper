@@ -23,6 +23,7 @@ import com.pikachu.wallpaper.cls.item.LookData;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.cls.json.JsonHomeTabsList;
 import com.pikachu.wallpaper.look.LookImageActivity;
+import com.pikachu.wallpaper.search.SearchActivity;
 import com.pikachu.wallpaper.util.base.BaseActivity;
 import com.pikachu.wallpaper.util.url.LoadUrl;
 
@@ -73,6 +74,18 @@ public class Tools {
     public static void setNonHigh(Context context, View view) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = getStatusBarHeight(context);
+        view.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 设置一个占位view 用于占位状态栏
+     *
+     * @param context
+     * @param view
+     */
+    public static void setNonHigh(Context context, View view,int attachValue) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = getStatusBarHeight(context)+attachValue;
         view.setLayoutParams(layoutParams);
     }
 
@@ -304,23 +317,64 @@ public class Tools {
     }
 
 
-
-
-
-    //任何地方跳转查看图片大图
+    /**
+     * 任何地方跳转查看图片大图
+     *
+     * @param activity
+     * @param page 页数
+     * @param pointer 当前点击item的下标
+     * @param imageTab tab
+     * @param imageDataList list
+     */
     public static void startLookImage(Activity activity, int page, int pointer, JsonHomeTabsList imageTab, List<JsonHomeF1ImageList> imageDataList){
         startLookImage(activity,new LookData(page,pointer,imageTab,imageDataList));
     }
 
 
-    //任何地方跳转查看图片大图
+    /**
+     * 任何地方跳转查看图片大图
+     *
+     * @param activity
+     * @param lok
+     */
     public static void startLookImage(Activity activity, LookData lok){
         Intent intent = new Intent(activity, LookImageActivity.class);
         if (lok == null)
             lok = new LookData();
         intent.putExtra(AppInfo.APP_KEY_LOOK_IMAGE,lok);
         activity.startActivity(intent);
+    }
 
+
+
+
+
+
+
+    /**
+     * 搜索/分类 跳转展示列表
+     *
+     * @param activity
+     */
+    public static void startSearchImage(Activity activity,String imageURl, String tabStr, String tagE, boolean isTagTab ){
+       startSearchImage(activity,new JsonHomeTabsList(imageURl,tabStr,tagE,isTagTab));
+    }
+
+
+
+
+    /**
+     * 搜索/分类 跳转展示列表
+     *
+     * @param activity
+     * @param tab
+     */
+    public static void startSearchImage(Activity activity, JsonHomeTabsList tab){
+        Intent intent = new Intent(activity, SearchActivity.class);
+        if (tab == null)
+            tab = new JsonHomeTabsList();
+        intent.putExtra(AppInfo.APP_KEY_LOOK_IMAGE,tab);
+        activity.startActivity(intent);
     }
 
 

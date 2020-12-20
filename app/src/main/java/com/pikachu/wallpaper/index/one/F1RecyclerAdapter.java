@@ -33,6 +33,7 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final OnItemClickListener onItemClickListener;
     private final Context context;
     private List<JsonHomeF1ImageList> jsonHomeF1ImageLists;
+    private int itemType ;
 
 
     public interface OnItemClickListener{
@@ -43,8 +44,9 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
 
-    public F1RecyclerAdapter(Context context,List<JsonHomeF1ImageList> jsonHomeF1ImageLists, OnItemClickListener onItemClickListener) {
+    public F1RecyclerAdapter(Context context,int itemType,List<JsonHomeF1ImageList> jsonHomeF1ImageLists, OnItemClickListener onItemClickListener) {
         this.context = context;
+        this.itemType = itemType;
         this.jsonHomeF1ImageLists = jsonHomeF1ImageLists;
         this.onItemClickListener = onItemClickListener;
     }
@@ -69,9 +71,9 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (viewType == LAYOUT_TIME)
             return  new ViewHolder1(LayoutInflater.from(parent.getContext()).inflate(R.layout.ui_home_item1, parent, false));
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                AppInfo.APP_HOME_F1_ITEM_STYLE ==0 ?
+                itemType ==0 ?
                         R.layout.ui_home_item :
-                AppInfo.APP_HOME_F1_ITEM_STYLE == 1 ?
+                itemType == 1 ?
                         R.layout.ui_home_item2 :
                         R.layout.ui_home_item3 ,parent,false));
     }

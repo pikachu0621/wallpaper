@@ -57,7 +57,8 @@ public class ImageAdapter extends BaseQuickAdapter<JsonHomeF1ImageList, BaseView
         baseViewHolder.getView(R.id.m_f1_p_image).setOnClickListener(v -> onTopClickListener.onTopClick( getItemPosition(s) /*baseViewHolder.getAdapterPosition()*//*<= 0 ? 0 : baseViewHolder.getAdapterPosition()-1*/ ,s,list));
 
         if (isMe){
-            ((TextView) baseViewHolder.getView(R.id.m_f1_p_text)).setText(s.getInfo().getDescription());
+            String description = s.getInfo().getDescription();
+            ((TextView) baseViewHolder.getView(R.id.m_f1_p_text)).setText(description==null||description.equals("")?AppInfo.APP_AUTHOR_NAME:description);
         }
     }
 }
