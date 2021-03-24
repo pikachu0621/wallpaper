@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wallpaper"
         tools:targetApi="n">
-        <activity android:name=".other.OtherActivity"></activity>
+        <activity android:name=".other.OtherActivity"/>
         <activity android:name=".search.SearchActivity" />
         <activity android:name=".look.LookImageActivity" />
         <activity android:name=".index.MainActivity">

@@ -2,6 +2,7 @@ package com.pikachu.wallpaper.util.url;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.annotation.IntDef;
 
@@ -14,6 +15,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -21,11 +23,11 @@ import java.util.zip.GZIPInputStream;
 public class LoadUrl {
 
 
-    private String url;
-    private int type;
-    private OnCall onCall;
-    private int connectTime = 5000;
-    private int readTime = 5000;
+    private final String url;
+    private final int type;
+    private final OnCall onCall;
+    private final int connectTime = 5000;
+    private final int readTime = 5000;
     private String postStr;
     private String charset = "UTF-8";
 
@@ -42,7 +44,7 @@ public class LoadUrl {
         void finish(String str);
     }
 
-    private Activity activity;
+    private final Activity activity;
 
 
     //get utf-8
@@ -132,6 +134,7 @@ public class LoadUrl {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.e("test", Objects.requireNonNull(e.getMessage()));
                 activity.runOnUiThread(() -> onCall.error(e));
             }
 
