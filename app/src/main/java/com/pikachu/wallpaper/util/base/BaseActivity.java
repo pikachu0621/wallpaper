@@ -60,7 +60,6 @@ public abstract class BaseActivity extends PKStatusBarActivity {
         super.setContentView(layoutResID);
         if (statusResID != 0)
             setPlaceholderView(statusResID);
-
     }
 
 
