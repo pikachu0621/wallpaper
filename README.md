@@ -20,7 +20,7 @@ Android 壁纸软件
 
 下载apk
 ---
->1. [Github下载 - 已更新](https://github.com/pikachu0621/wallpaper/app/image/release/app-release.apk)
+>1. [Github下载 - 已更新](https://github.com/pikachu0621/wallpaper/image/release/app-release.apk)
 >2. [国内下载 - 未更新](https://wwa.lanzous.com/i6zhqjjwoqf)
 
 效果图
