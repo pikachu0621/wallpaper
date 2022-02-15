@@ -12,13 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.GenericTransitionOptions;
-import com.bumptech.glide.Glide;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.util.app.AppInfo;
 import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.widget.QMUIRadiusImageView;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
@@ -94,11 +93,17 @@ public class F1RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
 
-            Glide.with(context)
-                    .load(getClarity(jsonHomeF1ImageList.getSmallUrl()))
-                    //.placeholder(new ColorDrawable(Color.parseColor(jsonHomeF1ImageList.getColor())))android.R.anim.fade_in
-                    .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
-                    //.override((int)(jsonHomeF1ImageList.getWidth()*AppInfo.APP_HOME_ITEM_PRO), (int)(jsonHomeF1ImageList.getHeight()*AppInfo.APP_HOME_ITEM_PRO)) // resizes the image to these dimensions (in pixel). does not respect aspect r
+//            Glide.with(context)
+//                    .load(getClarity(jsonHomeF1ImageList.getSmallUrl()))
+//                    //.placeholder(new ColorDrawable(Color.parseColor(jsonHomeF1ImageList.getColor())))android.R.anim.fade_in
+//                    .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
+//                    //.override((int)(jsonHomeF1ImageList.getWidth()*AppInfo.APP_HOME_ITEM_PRO), (int)(jsonHomeF1ImageList.getHeight()*AppInfo.APP_HOME_ITEM_PRO)) // resizes the image to these dimensions (in pixel). does not respect aspect r
+//                    .into(holderImage.hItemImage1);
+
+            Picasso.get()
+                    .load(F1RecyclerAdapter.getClarity(jsonHomeF1ImageList.getSmallUrl()))
+                    //.rotate(45f)
+                    //.placeholder(R.drawable.placeholder_disk)
                     .into(holderImage.hItemImage1);
 
 

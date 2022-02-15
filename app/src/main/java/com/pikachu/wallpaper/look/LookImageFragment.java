@@ -11,10 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.util.app.AppInfo;
@@ -22,6 +18,7 @@ import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.base.BaseFragment;
 import com.pikachu.wallpaper.util.gaussian.Gaussian;
 import com.pikachu.wallpaper.widget.CircularProgressView;
+import com.squareup.picasso.Picasso;
 
 
 public class LookImageFragment extends BaseFragment {
@@ -55,11 +52,15 @@ public class LookImageFragment extends BaseFragment {
         lookFragmentImage1.setOnClickListener(onClickListener);
 
 
-        Glide.with(activity)
+/*        Glide.with(activity)
                 .load(url)
                 .transition(DrawableTransitionOptions.withCrossFade(AppInfo.APP_ANIMATION_TIME))
-                .into(lookFragmentImage1);
+                .into(lookFragmentImage1);*/
 
+
+        Picasso.get()
+                .load(url)
+                .into(lookFragmentImage1);
 
 
 

@@ -43,14 +43,19 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //图片缓存工具
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //implementation 'com.github.bumptech.glide:glide:4.12.0'
+    //annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //图片缓存工具
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
     //高斯模糊
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
 
     //下拉刷新
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'  //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.1' //经典刷新头
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'  //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1' //经典刷新头
 
 
     //快速轮播实现

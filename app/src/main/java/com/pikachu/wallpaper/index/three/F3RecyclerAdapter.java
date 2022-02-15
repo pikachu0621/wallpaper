@@ -6,14 +6,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.GenericTransitionOptions;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonHomeF1ImageList;
 import com.pikachu.wallpaper.index.one.F1RecyclerAdapter;
 import com.pikachu.wallpaper.util.app.AppInfo;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,9 +52,12 @@ public class F3RecyclerAdapter extends BaseQuickAdapter<JsonHomeF1ImageList ,  B
         // 比例缩小 并设置imageView 高
         F1RecyclerAdapter.proImageHW(context,jsonHomeF1ImageList.getHeight(), AppInfo.APP_HOME_ITEM_PRO, image1);
 
-        Glide.with(context)
+/*        Glide.with(context)
                 .load(F1RecyclerAdapter.getClarity(jsonHomeF1ImageList.getSmallUrl()))
                 .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
+                .into(image1);*/
+        Picasso.get()
+                .load(F1RecyclerAdapter.getClarity(jsonHomeF1ImageList.getSmallUrl()))
                 .into(image1);
 
         String description = jsonHomeF1ImageList.getInfo().getDescription();

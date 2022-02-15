@@ -7,14 +7,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.gson.Gson;
 import com.pikachu.wallpaper.R;
 import com.pikachu.wallpaper.cls.json.JsonBing;
+import com.pikachu.wallpaper.index.one.F1RecyclerAdapter;
 import com.pikachu.wallpaper.util.app.AppInfo;
 import com.pikachu.wallpaper.util.app.Tools;
 import com.pikachu.wallpaper.util.url.LoadUrl;
+import com.squareup.picasso.Picasso;
 
 import static com.pikachu.wallpaper.util.app.Tools.showToast;
 
@@ -67,9 +67,12 @@ public class F2BarView {
                 JsonBing jsonBing = new Gson().fromJson(str, JsonBing.class);
                 if (jsonBing.getStatus() == 1) {
 
-                    Glide.with(activity)
+                    /*Glide.with(activity)
                             .load(jsonBing.getBing().getUrl())
                             .transition(DrawableTransitionOptions.withCrossFade(AppInfo.APP_ANIMATION_TIME))
+                            .into(mF2BarQmui);*/
+                    Picasso.get()
+                            .load(jsonBing.getBing().getUrl())
                             .into(mF2BarQmui);
                     //mF2BarText.setText(jsonBing.getBing().getCopyright());
                     String copyright = jsonBing.getBing().getCopyright();

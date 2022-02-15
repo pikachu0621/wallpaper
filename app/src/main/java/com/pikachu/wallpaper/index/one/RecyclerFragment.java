@@ -1,6 +1,7 @@
 package com.pikachu.wallpaper.index.one;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,6 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
             @Override
             public void finish(String str) {
                 //加载成功后 截取需要的字符串
-
                 List<JsonHomeF1ImageList> jsonHomeF1ImageLists = new Gson().fromJson(str, new TypeToken<List<JsonHomeF1ImageList>>() {
                 }.getType());
 

@@ -14,6 +14,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,6 +23,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,10 +37,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.bumptech.glide.request.transition.ViewPropertyTransition;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pikachu.wallpaper.R;
@@ -51,6 +50,8 @@ import com.pikachu.wallpaper.util.base.BaseActivity;
 import com.pikachu.wallpaper.util.gaussian.Gaussian;
 import com.pikachu.wallpaper.util.state.PKStatusBarTools;
 import com.pikachu.wallpaper.util.url.LoadUrl;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,7 +86,6 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
         initView();
         init();
     }
-
 
 
     private void init() {
@@ -150,26 +150,35 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
     private void loadGaussianBg(int position) {
 
         if (!AppInfo.APP_LOOK_GSN) return;
-        Glide.with(this)
-                .asBitmap()
+        Picasso.get()
                 .load(imageDataList.get(position).getSmallUrl())
-                .override(320)
-                .into(new SimpleTarget<Bitmap>() {
+                .into(new Target() {
                     @SuppressLint("UseCompatLoadingForDrawables")
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         //动画 图片置换效果
-                        Drawable[] drawables = new Drawable[]{
-                                bitmapLod == null ? getResources().getDrawable(android.R.color.transparent) : new BitmapDrawable(bitmapLod),
-                                new BitmapDrawable((bitmapLod = Gaussian.doBlur(resource, AppInfo.APP_LOOK_GSN_R)))
+                         Drawable[] drawables = new Drawable[]{
+                                bitmapLod == null ? getResources().getDrawable(android.R.color.transparent) : new BitmapDrawable(LookImageActivity.this.getResources(), bitmapLod),
+                                new BitmapDrawable(LookImageActivity.this.getResources(), (bitmapLod = Gaussian.doBlur(bitmap, AppInfo.APP_LOOK_GSN_R)))
                         };
                         TransitionDrawable td = new TransitionDrawable(drawables);
                         lookImage1.setImageDrawable(td);
                         td.setCrossFadeEnabled(true);
                         td.startTransition(AppInfo.APP_ANIMATION_TIME);
                     }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
                 });
+
+
     }
 
     private void initView() {
@@ -190,7 +199,7 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
     private void setWallpaper() {
 
         int currentItem = lookPager.getCurrentItem();
-        Glide.with(this)
+/*        Glide.with(this)
                 .asBitmap()
                 .load(imageDataList.get(currentItem).getRaw())
                 .into(new SimpleTarget<Bitmap>() {
@@ -203,6 +212,30 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
                             e.printStackTrace();
                             showToast("设置失败");
                         }
+                    }
+                });*/
+        Picasso.get()
+                .load(imageDataList.get(currentItem).getRaw())
+                .into(new Target(){
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        try {
+                            setWallpaper(bitmap);
+                            showToast("设置完成");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            showToast("设置失败");
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
                     }
                 });
 
@@ -228,7 +261,7 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
             ///加载失败
             @Override
             public void error(Exception e) {
-                showToast("下一页加载失败\n"+e.getMessage());
+                showToast("下一页加载失败\n" + e.getMessage());
                 if (page > minPager) page--;
                 isLoad = false;
             }
@@ -259,6 +292,8 @@ public class LookImageActivity extends BaseActivity implements View.OnClickListe
     }
 
     private String getImageTitle(int position) {
+        if (position > imageDataList.size() || position < 0 )
+            return AppInfo.APP_AUTHOR_NAME;
         String description = imageDataList.get(position).getInfo().getDescription();
         return description == null || description.equals("") ? AppInfo.APP_AUTHOR_NAME : description;
     }

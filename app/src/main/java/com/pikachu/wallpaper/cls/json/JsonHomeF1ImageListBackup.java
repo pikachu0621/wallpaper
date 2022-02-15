@@ -8,7 +8,8 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import java.util.List;
 
-public class JsonHomeF1ImageList implements Serializable {
+public class JsonHomeF1ImageListBackup implements Serializable {
+
 
     public Integer getId() {
         return id;
@@ -106,11 +107,11 @@ public class JsonHomeF1ImageList implements Serializable {
         this.color = color;
     }
 
-    public JsonHomeF1ImageListBackup.InfoBean getInfo() {
+    public InfoBean getInfo() {
         return info;
     }
 
-    public void setInfo(JsonHomeF1ImageListBackup.InfoBean info) {
+    public void setInfo(InfoBean info) {
         this.info = info;
     }
 
@@ -166,7 +167,7 @@ public class JsonHomeF1ImageList implements Serializable {
     private Integer width;
     private Integer height;
     private String color;
-    private JsonHomeF1ImageListBackup.InfoBean info;
+    private InfoBean info;
     private String todayStr;
     @Expose(serialize = false,deserialize = false)
     private boolean isTimeItem = false;
@@ -212,35 +213,35 @@ public class JsonHomeF1ImageList implements Serializable {
             this.description = description;
         }
 
-        public JsonHomeF1ImageListBackup.InfoBean.ExifBean getExif() {
+        public ExifBean getExif() {
             return exif;
         }
 
-        public void setExif(JsonHomeF1ImageListBackup.InfoBean.ExifBean exif) {
+        public void setExif(ExifBean exif) {
             this.exif = exif;
         }
 
-        public JsonHomeF1ImageListBackup.InfoBean.LocationBean getLocation() {
+        public LocationBean getLocation() {
             return location;
         }
 
-        public void setLocation(JsonHomeF1ImageListBackup.InfoBean.LocationBean location) {
+        public void setLocation(LocationBean location) {
             this.location = location;
         }
 
-        public JsonHomeF1ImageListBackup.InfoBean.UserBean getUser() {
+        public UserBean getUser() {
             return user;
         }
 
-        public void setUser(JsonHomeF1ImageListBackup.InfoBean.UserBean user) {
+        public void setUser(UserBean user) {
             this.user = user;
         }
 
-        public JsonHomeF1ImageListBackup.InfoBean.UrlsBean getUrls() {
+        public UrlsBean getUrls() {
             return urls;
         }
 
-        public void setUrls(JsonHomeF1ImageListBackup.InfoBean.UrlsBean urls) {
+        public void setUrls(UrlsBean urls) {
             this.urls = urls;
         }
 
@@ -260,11 +261,11 @@ public class JsonHomeF1ImageList implements Serializable {
             this.updated_at = updated_at;
         }
 
-        public List<JsonHomeF1ImageListBackup.InfoBean.TagsBean> getTags() {
+        public List<TagsBean> getTags() {
             return tags;
         }
 
-        public void setTags(List<JsonHomeF1ImageListBackup.InfoBean.TagsBean> tags) {
+        public void setTags(List<TagsBean> tags) {
             this.tags = tags;
         }
 
@@ -286,13 +287,13 @@ public class JsonHomeF1ImageList implements Serializable {
         private Integer views;
         private Integer downloads;
         private String description;
-        private JsonHomeF1ImageListBackup.InfoBean.ExifBean exif;
-        private JsonHomeF1ImageListBackup.InfoBean.LocationBean location;
-        private JsonHomeF1ImageListBackup.InfoBean.UserBean user;
-        private JsonHomeF1ImageListBackup.InfoBean.UrlsBean urls;
+        private ExifBean exif;
+        private LocationBean location;
+        private UserBean user;
+        private UrlsBean urls;
         private String created_at;
         private String updated_at;
-        private List<JsonHomeF1ImageListBackup.InfoBean.TagsBean> tags;
+        private List<TagsBean> tags;
 
 
         public static class ExifBean  implements Serializable {
@@ -362,11 +363,11 @@ public class JsonHomeF1ImageList implements Serializable {
         }
 
         public static class LocationBean  implements Serializable {
-            public JsonHomeF1ImageListBackup.InfoBean.LocationBean.PositionBean getPosition() {
+            public PositionBean getPosition() {
                 return position;
             }
 
-            public void setPosition(JsonHomeF1ImageListBackup.InfoBean.LocationBean.PositionBean position) {
+            public void setPosition(PositionBean position) {
                 this.position = position;
             }
 
@@ -374,7 +375,7 @@ public class JsonHomeF1ImageList implements Serializable {
              * position : {"latitude":0,"longitude":0}
              */
 
-            private JsonHomeF1ImageListBackup.InfoBean.LocationBean.PositionBean position;
+            private PositionBean position;
 
 
             public static class PositionBean  implements Serializable {
@@ -478,11 +479,11 @@ public class JsonHomeF1ImageList implements Serializable {
                 this.location = location;
             }
 
-            public JsonHomeF1ImageListBackup.InfoBean.UserBean.ProfileImageBean getProfile_image() {
+            public ProfileImageBean getProfile_image() {
                 return profile_image;
             }
 
-            public void setProfile_image(JsonHomeF1ImageListBackup.InfoBean.UserBean.ProfileImageBean profile_image) {
+            public void setProfile_image(ProfileImageBean profile_image) {
                 this.profile_image = profile_image;
             }
 
@@ -518,11 +519,11 @@ public class JsonHomeF1ImageList implements Serializable {
                 this.total_photos = total_photos;
             }
 
-            public JsonHomeF1ImageListBackup.InfoBean.UserBean.LinksBean getLinks() {
+            public LinksBean getLinks() {
                 return links;
             }
 
-            public void setLinks(JsonHomeF1ImageListBackup.InfoBean.UserBean.LinksBean links) {
+            public void setLinks(LinksBean links) {
                 this.links = links;
             }
 
@@ -553,12 +554,12 @@ public class JsonHomeF1ImageList implements Serializable {
             private String portfolio_url;
             private String bio;
             private String location;
-            private JsonHomeF1ImageListBackup.InfoBean.UserBean.ProfileImageBean profile_image;
+            private ProfileImageBean profile_image;
             private String instagram_username;
             private Integer total_collections;
             private Integer total_likes;
             private Integer total_photos;
-            private JsonHomeF1ImageListBackup.InfoBean.UserBean.LinksBean links;
+            private LinksBean links;
 
             public static class ProfileImageBean  implements Serializable {
                 public String getLarge() {
