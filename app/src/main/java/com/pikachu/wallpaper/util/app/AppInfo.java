@@ -66,7 +66,7 @@ public class AppInfo {
 
     ////////////    API     ///////
     //用于加载图片列表
-    public static final String APP_API_IMAGE_LIST = "https://api.ihansen.org/img/detail?page={page}&index=&orderBy={tabs}&tag={tag}&favorites=";
+    public static final String APP_API_IMAGE_LIST = "https://api.ihansen.org/img/detail?perPage=20&page={page}&index=&orderBy={tabs}&tag={tag}&favorites=";
     public static final String APP_API_TABS_LIST = "https://photo.ihansen.org";
     //必应每日一图
     public static final String APP_API_DAY_ONE_IMAGE = "https://api.no0a.cn/api/bing/0";

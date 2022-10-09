@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -274,20 +275,23 @@ public class Tools {
         ArrayList<JsonHomeTabsList> jsonHomeTabsLists = new ArrayList<>();
 
         if (str != null && !str.equals("")){
-            String str1 = cutStr(str, "js-tag-container\">", "<div class=\"container-item");
+            String str1 = cutStr(str, "js-tag-container\"", "<div class=\"container-item");
             if (str1 != null && !str1.equals("") ){
                 String replace = str1.replace(" ", "").replace("\n", "");
                 String[] dataS = replace.split("<divclass=\"tag-item\"");
-                for (String ob:dataS){
-                    if (ob != null && !ob.equals("")){
+                for (String ob : dataS){
+                    if (ob != null && ob.contains("background-image")){
                         boolean isTagTab = true;
                         String tabStr = cutStr(ob, "tag-item-text\"><b>", "<");
                         String imageURl = cutStr(ob, "url('", "');");
                         String tabE = cutStr(ob, "href=\"/tag/", "\"");
                         if (tabE == null || tabE.equals("")){
                             tabE = cutStr(ob, "href=\"/", "\"");
-                            tabE = tabE.replace("trending","likes");
-                            tabE = tabE.replace("discover","");
+                            if (tabE != null){
+                                tabE = tabE.replace("trending","likes");
+                                tabE = tabE.replace("albums","likes");
+                                tabE = tabE.replace("discover","");
+                            }
                             isTagTab = false;
                         }
                         jsonHomeTabsLists.add(new JsonHomeTabsList(imageURl,tabStr,tabE,isTagTab));

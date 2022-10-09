@@ -107,7 +107,7 @@ public class TowFragment extends BaseFragment implements F2RecyclerAdapter.OnIte
 
                 JsonHomeTabsList jsonHomeTabsList = new JsonHomeTabsList();
                 jsonHomeTabsList.setTabStr("热门分类");
-                f2ItemData.add(new F2ItemData(jsonHomeTabsList,F2ItemData.TEXT,F2ItemData.TEXT_MAX));
+                f2ItemData.add(new F2ItemData(jsonHomeTabsList,F2ItemData.TEXT, F2ItemData.TEXT_MAX));
 
                 for (int i =0 ; i < jsonHomeTabsLists.size() ; i++){
                     if (i == AppInfo.APP_HOME_F2_RM ){

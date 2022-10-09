@@ -73,7 +73,10 @@ public class RecyclerFragment extends BaseFragment implements F1RecyclerAdapter.
 
         String url = AppInfo.getUrl(jsonHomeTabsList, page);
 
-        new LoadUrl(activity,url, new LoadUrl.OnCall() {
+        Tools.showToast(getContext(), url);
+        Log.i("TEST_TT", url);
+
+        new LoadUrl(activity, url, new LoadUrl.OnCall() {
 
 
             @Override
